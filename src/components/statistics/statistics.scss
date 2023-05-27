@@ -1,0 +1,53 @@
+.stat__container {
+    width: 100%;
+    margin-top: 17px;
+    height: 100vh;
+}
+
+.stat__navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(131, 131, 131, 0.2);
+    border: 2px solid #FFFFFF;
+    backdrop-filter: blur(3px);
+    border-radius: 9px;
+    min-width: 100%;
+    height: 50px;
+    padding: 0px 7px;
+}
+
+.stat__navbar * {
+    color: white;
+}
+
+.stat__navbar-rate {
+    background: rgba(30, 30, 30, 0);
+    border: 2px solid #FFFFFF;
+    border-radius: 7px;
+    height: 35px;
+    padding: 0px 35px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2px;
+}
+.stat__navbar-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    border-radius: 9px;
+}
+.stat__navbar-btns button {
+    width: 100%;
+    background: rgba(30, 30, 30, 0);
+    border: none;
+    font-size: 14.5px;
+    padding: 3px 27.5px;
+}
+.stat__navbar-btns .stat-btn-selected {
+    background-color: white;
+    color: rgb(17, 17, 17);
+}
