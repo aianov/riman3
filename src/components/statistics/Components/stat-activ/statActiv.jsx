@@ -53,7 +53,7 @@ export const StatActiv = () => {
                             <table className='w100'>
                                 <tbody>
                                     <tr className={activ['content-tr1']}>
-                                        {[...Array(25)].map((_, index) => (
+                                        {[...Array(24)].map((_, index) => (
                                             <td key={index} className={activ['content-tr1-column']} />
                                         ))}
                                     </tr>
@@ -73,7 +73,7 @@ export const StatActiv = () => {
                     <span>Мат бои</span>
                     <div className={activ['content-tasks-table']}>
                         <div className={`${activ['content-tasks-table-months']} df jcfe aic w100`}>
-                            {months.reverse().map((arr, ind) => (
+                            {months.map((arr, ind) => (
                                 <span key={ind}>{arr}</span>
                             ))}
                         </div>

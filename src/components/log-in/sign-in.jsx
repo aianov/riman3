@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { CiDark, CiLight } from 'react-icons/ci'
+import { SlSocialVkontakte } from 'react-icons/sl'
 
 import { useTheme } from '../../hooks/usetheme'
 
@@ -175,12 +176,12 @@ export const LogIn = () => {
                 <div className="logwindow__forms">
                   <div className="logwindow__formwrap">
                     <div className="logwindow__form">
-                      <input autoComplete="off" onChange={e => loginHandler(e.target.value)} value={login} name='login' placeholder='Логин' className='logwindow__inp1 inpcss inptext' type="text" maxLength={20} onKeyPress={e => handleSumbit(e)} />
+                      <input onChange={e => loginHandler(e.target.value)} value={login} name='login' placeholder='Логин' className='logwindow__inp1 inpcss inptext' type="text" maxLength={20} onKeyPress={e => handleSumbit(e)} />
                     </div>
                     {(loginError && true) && <div className='inp__error'><p className='inp__errorText'>{loginErrorText}</p></div>}
                   </div>
                   <div className="logwindow__formlastchild logwindow__formadd">
-                    <input autoComplete='off' onChange={e => passwordHandler(e.target.value)} value={password} name='password' placeholder='Пароль' className='logwindow__inp2 inpcss' type="password" maxLength={20} onKeyPress={e => handleSumbit(e)} />
+                    <input onChange={e => passwordHandler(e.target.value)} value={password} name='password' placeholder='Пароль' className='logwindow__inp2 inpcss' type="password" maxLength={20} onKeyPress={e => handleSumbit(e)} />
                   </div>
                   {(passwordError && true) && <div className='inppass__error'><p className='inppass__errorText'>{passwordErrorText}</p></div>}
                   {(notauth && true) && <div className='inppass__error'><p className='inppass__errorText' href=''>{authError}</p></div>}
@@ -192,6 +193,7 @@ export const LogIn = () => {
                 </div>
                 <div className="logwindow__socials">
                   <div className="logwindow__socials-vk socdiv">
+                    <SlSocialVkontakte style={{fontSize: '25px'}} className='vk socico'/>
                   </div>
                   <div className="logwindow__socials-google socdiv">
                     <AiOutlineGoogle className="google socico" />

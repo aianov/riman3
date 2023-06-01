@@ -28,21 +28,11 @@ export const Statistics = () => {
             <div className="stat__navbar">
                 <div className="stat__navbar-rate"><p>Рейтинг: ???</p></div>
                 <div className="stat__navbar-btns">
-                    <Link to={firBtn ? '' : "./variant"}>
-                        <button
-                        disabled={firBtn}
-                        onClick={firBtnHandler}
-                        className={`stat__navbar-btn1 ${firBtn ? 'stat-btn-selected' : ''}`}>
+                    <Link onClick={firBtnHandler} className={`tdn stat__navbar-btn1 ${firBtn ? 'stat-btn-selected' : ''}`} to={firBtn ? '' : "./variant"}>
                             Статистика варианта
-                        </button>
                     </Link>
-                    <Link to={secBtn ? '' : "."}>
-                        <button
-                        disabled={secBtn}
-                        onClick={secBtnHandler}
-                        className={`stat__navbar-btn2 ${secBtn ? 'stat-btn-selected' : ''}`}>
-                            Общая статистика
-                        </button>
+                    <Link onClick={secBtnHandler} className={`tdn stat__navbar-btn2 ${secBtn ? 'stat-btn-selected' : ''}`} to={secBtn ? '' : "."}>
+                        Общая статистика
                     </Link>
                 </div>
             </div>

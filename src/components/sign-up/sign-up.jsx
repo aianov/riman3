@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { CiDark, CiLight } from 'react-icons/ci'
+import { SlSocialVkontakte } from 'react-icons/sl'
 import { nanoid } from 'nanoid';
 
 import { useTheme } from '../../hooks/usetheme'
@@ -298,6 +299,7 @@ export const SignUp = () => {
                 </div>
                 <div className="regwindow__socials">
                   <div className="regwindow__socials-vk socdiv">
+                    <SlSocialVkontakte style={{fontSize: '25px'}} className='vk socico'/>
                   </div>
                   <div className="regwindow__socials-google socdiv">
                     <AiOutlineGoogle className="google socico" />

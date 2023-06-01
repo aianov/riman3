@@ -168,11 +168,11 @@ export const StatTheme = () => {
                                 :
                                 <div className={`${themes['left-content-list']} w100`}>
                                     {items.map((arr, ind) => (
-                                        <div className={`${themes['content-item']} df aic w100`} key={ind}>
-                                            <p className={`${themes.itemname} df aic br1w w50`}>{arr.item ? arr.item : '-'}</p>
-                                            <p className={`${themes.tasks} df aic jcc br1w`}>{arr.tasks ? arr.tasks : '-'}</p>
-                                            <p className={`${themes.proc} df aic jcc br1w`}>{arr.proc ? arr.proc : '-'}</p>
-                                            <p className={`${themes.time} df aic jcc`}>{arr.time ? arr.time : '-'}</p>
+                                        <div className={`${themes['content-item']} df aic w100 oh`} key={ind}>
+                                            <p className={`${themes.itemname} br1w w50 oh toe`}>{arr.item ? arr.item : '-'}</p>
+                                            <p className={`${themes.tasks} tac br1w oh toe`}>{arr.tasks ? arr.tasks : '-'}</p>
+                                            <p className={`${themes.proc} tac br1w oh toe`}>{arr.proc ? arr.proc : '-'}</p>
+                                            <p className={`${themes.time} tac oh toe`}>{arr.time ? arr.time : '-'}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -221,10 +221,10 @@ export const StatTheme = () => {
                                 <div className={`${themes['left-content-list']} w100`}>
                                     {itemsright.map((arr, ind) => (
                                         <div className={`${themes['content-item']} df aic w100`} key={ind}>
-                                            <p className={`${themes.itemname} df aic br1w w50`}>{arr.item ? arr.item : '-'}</p>
-                                            <p className={`${themes.tasks} df aic jcc br1w`}>{arr.tasks ? arr.tasks : '-'}</p>
-                                            <p className={`${themes.proc} df aic jcc br1w`}>{arr.proc ? arr.proc : '-'}</p>
-                                            <p className={`${themes.time} df aic jcc`}>{arr.time ? arr.time : '-'}</p>
+                                            <p className={`${themes.itemname} oh toe br1w w50`}>{arr.item ? arr.item : '-'}</p>
+                                            <p className={`${themes.tasks} tac oh toe br1w`}>{arr.tasks ? arr.tasks : '-'}</p>
+                                            <p className={`${themes.proc} tac oh toe br1w`}>{arr.proc ? arr.proc : '-'}</p>
+                                            <p className={`${themes.time} tac oh toe`}>{arr.time ? arr.time : '-'}</p>
                                         </div>
                                     ))}
                                 </div>

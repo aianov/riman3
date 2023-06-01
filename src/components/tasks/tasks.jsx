@@ -154,6 +154,13 @@ export const Tasks = () => {
         setVisibletext(!visibletext)
     }
 
+    const burgerHandler = () => {
+        const burgerMenu = document.querySelector('.burger-menu');
+        const menu = document.querySelector('.menu');
+        menu.classList.toggle('show');
+        burgerMenu.classList.toggle('open')
+    }
+
     return (
         <>
             <img className='tasks-background' src={bg ? tasksDark : tasksLight} alt="background of tasks-page" />
@@ -179,6 +186,23 @@ export const Tasks = () => {
                                     </ol>
                                 </div>
                             </div>
+                            <div class="menu-container">
+                                <div class="burger-menu" onClick={() => burgerHandler()}>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                </div>
+                                <div class="menu">
+                                    <div className="menu-list df fdc w100">
+                                    <Link onClick={taskBtn} to={tasksClick ? null : "/tasks"}>
+                                        <p className={tasksClick ? 'menu-selected' : ''}>Задачи</p>
+                                    </Link>
+                                    <Link onClick={statisticBtn} to={statClick ? null : "/tasks/statistics"}>
+                                        <p className={statClick ? 'menu-selected' : ''}>Статистика</p>
+                                    </Link>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="tasks-rightbar__list-theme">
                                 <CiLight onClick={() => themeBtn("light")} className='tasks-rightbar__list-theme__ico taskslight' size={25} />
                                 <CiDark onClick={() => themeBtn("dark")} className='tasks-rightbar__list-theme__ico tasksdark themeico-hide' size={25} />
@@ -192,7 +216,7 @@ export const Tasks = () => {
                                         <div className="tasks-leftbar-wrap">
                                             <div className="tasks-leftbarcontent">
                                                 <div className="tasks-leftbarcontent-wrap">
-                                                    <TasksFilters setShowgeneration={setShowgeneration} visibletext={visibletext}/>
+                                                    <TasksFilters setShowgeneration={setShowgeneration} visibletext={visibletext} />
                                                     {visibletext ? <></> :
                                                         <>
                                                             <div className="tasks-leftbarcontent__copyed-div">
@@ -200,19 +224,20 @@ export const Tasks = () => {
                                                             </div>
                                                             <div className="tasks-leftbarcontent__inp">
                                                                 <div className="tasks-leftbarcontent__inp1" onClick={copyHandler}>
-                                                                    <div className='tasks-leftbarcontent__inp-id tasks-inp__remove'>ID варианта</div>
+                                                                    <div className='tasks-leftbarcontent__inp-id tasks-inp__remove'><p>ID варианта</p></div>
                                                                     <div className="tasks-ico__div">
                                                                         <FiCopy size={16.5} />
                                                                     </div>
                                                                 </div>
                                                                 <div className="tasks-leftbarcontent__inp1">
-                                                                    <div className='tasks-leftbarcontent__inp-export tasks-inp__remove'>Экспорт в PDF</div>
+                                                                    <div className='tasks-leftbarcontent__inp-export tasks-inp__remove'><p>
+                                                                        Экспорт в PDF</p></div>
                                                                     <div className="tasks-ico__div">
                                                                         <BiExport className='tasks-export' size={17.3} />
                                                                     </div>
                                                                 </div>
                                                                 <div className="tasks-leftbarcontent__inp1">
-                                                                    <div className='tasks-leftbarcontent__inp-scan tasks-inp__remove'>Печать</div>
+                                                                    <div className='tasks-leftbarcontent__inp-scan tasks-inp__remove'><p>Печать</p></div>
                                                                     <div className="tasks-ico__div">
                                                                         <HiOutlinePrinter size={18} />
                                                                     </div>

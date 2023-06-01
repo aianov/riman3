@@ -7,6 +7,7 @@ import { BiSearch } from 'react-icons/bi'
 import { Slider } from './components/slider'
 import { Link } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import useDebounce from '../../../../hooks/useDebounce'
 
@@ -200,7 +201,7 @@ export const StatMain = () => {
                                 Варианты
                             </Link>
                             <Link onClick={() => midBtns(2)} to={themeMid ? null : '/tasks/statistics/themes'} style={themeMid ? { backgroundColor: 'white', color: 'black' } : { backgroundColor: 'rgb(0, 0, 0, 0)' }}>
-                                        Темы
+                                Темы
                             </Link>
                         </div>
                         <Link to="/tasks/statistics/themes" className="stat__bottom-middle__stat-bar__more">
@@ -224,11 +225,7 @@ export const StatMain = () => {
                         </div>
                         {itemLoad ? (
                             <div className='stat-bottom-itemload'>
-                                <Skeleton />
-                                <Skeleton />
-                                <Skeleton />
-                                <Skeleton />
-                                <Skeleton />
+                                <Skeleton count={midItems.length}/>
                             </div>
                         ) : (
                             <div className="stat__bottom-middle__stat-main__main">

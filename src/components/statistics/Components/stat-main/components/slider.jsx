@@ -1,35 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
 
 export const Slider = () => {
-    const [translateValue, setTranslateValue] = useState(0);
-    const [max, setMax] = useState(0);
+    const slider = document.querySelector(".slider__items")
 
-    const gg = require.context('../images', true, /\.png$/);
-    const numberOfImages = gg.keys().length;
-    const items = Array.from({ length: numberOfImages }, (_, i) => i + 1);
-
-    useEffect(() => {
-        function init() {
-            let num = 0;
-            for (let i = 0; i < items.length - 8; i++) {
-                num -= 110;
-            }
-            setMax(num)
-        }
-        init()
-    }, [items.length])
     const prevSlide = () => {
-        if (translateValue === 0) { return; }
-        if (translateValue === -110) {
-            setTranslateValue((prevValue) => prevValue + 110);
-            return
-        }
-        setTranslateValue((prevValue) => prevValue + 110);
+        slider.scrollBy({
+            left: -150, // Задайте нужный размер прокрутки
+            behavior: 'smooth' // Добавляем плавную анимацию
+        });
     };
     const nextSlide = () => {
-        if (translateValue === max) { return; }
-        setTranslateValue((prevValue) => prevValue - 110);
+        slider.scrollBy({
+            left: 150, // Задайте нужный размер прокрутки
+            behavior: 'smooth' // Добавляем плавную анимацию
+        });
     };
 
     const images = {};
@@ -48,7 +33,7 @@ export const Slider = () => {
             </div>
             <div className="slider-div">
                 <div className="slider">
-                    <div className="slider__items" style={{ transform: `translateX(${translateValue}px)` }}>
+                    <div className="slider__items">
                         {Object.keys(images).map((key, ind) => (
                             <div className="slider__item" key={ind}>
                                 <div className="slider__item-image">

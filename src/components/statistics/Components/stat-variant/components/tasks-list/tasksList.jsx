@@ -61,7 +61,7 @@ export const TasksList = ({ pagitasks, loading, testik }) => {
                         {pagitasks.error ? <h1 style={{ textAlign: "center" }}>IMAGE ERROR</h1> : <img src={pagitasks.image} alt='Your finished task' />}
                     </div>
                     <div className={`${list['right-footer']} df jcsb w100`}>
-                        <div className={`${list['right-footer-left']} df aic`}>
+                        <div className={list['right-footer-left']}>
                             <p>Ответ: {pagitasks.grade}</p>
                         </div>
                         <div className={`${list['right-footer-right']} df aic fww`}>

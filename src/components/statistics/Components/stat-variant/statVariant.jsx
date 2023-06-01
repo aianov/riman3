@@ -93,10 +93,6 @@ export const StatVariant = () => {
             setTasks(updatedTasks);
         };
         getTasks();
-        window.addEventListener('storageUpdated', updTest);
-        return () => {
-            window.removeEventListener('storageUpdated', updTest);
-        };
     }, []);
     const lastTasksIndex = currentPage * tasksPerPage
     const firstTasksIndex = lastTasksIndex - tasksPerPage
@@ -132,6 +128,10 @@ export const StatVariant = () => {
     const hideNav = () => {
         setVisibletext(!visibletext)
     }
+
+    useEffect(() => {
+        updTest()
+    }, []);
 
     return (
         <div className={variants.main}>

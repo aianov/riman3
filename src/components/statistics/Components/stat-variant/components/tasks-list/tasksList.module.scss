@@ -9,6 +9,22 @@
         padding: 10px 10px 0px 10px;
         border-bottom: 2px dashed white;
 
+        
+        @media (max-width: 680px) {
+            display: block;
+            .left {
+                .left-attemps {
+                    justify-content: center;
+                    div {
+                        margin-left: 10px;
+                    }
+                }
+            }
+            .image {
+                margin-bottom: 10px;
+            }
+        }
+
         .title {
             font-size: 25px;
         }
@@ -24,6 +40,10 @@
         .left {
             border-right: 2px dashed white;
             padding: 0px 15px 15px 5px;
+            @media (max-width: 680px) {
+                border: none;
+                padding: 0px 0px 10px 0px;
+            }
 
             .left-time,
             .left-attemp {
@@ -35,7 +55,6 @@
 
             .left-attemps {
                 padding: 5px;
-
                 div {
                     background: rgba(131, 131, 131, 0.25);
                     width: 25px;
@@ -48,9 +67,23 @@
         .right {
             padding: 0px 15px;
 
+            @media (max-width: 680px) {
+                padding: 0px;
+            }
+
             .right-footer {
                 margin-bottom: 10px;
                 font-size: 17.5px;
+                @media (max-width: 530px) {
+                    display: block;
+                    .right-footer-left {
+                        display: block;
+                    }
+                    .right-footer-right {
+                        margin-top: 10px;
+                        justify-content: space-between;
+                    }
+                }
 
                 .right-footer-left {
                     border: 1px solid white;
@@ -70,6 +103,9 @@
                     border-radius: 5px;
                     color: black;
                     padding: 0px 5px;
+                    @media (max-width: 401px) {
+                        margin-top: 10px;
+                    }
 
                     div {
                         margin-left: 5px;

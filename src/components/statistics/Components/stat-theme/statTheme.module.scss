@@ -5,6 +5,9 @@
     border-radius: 25px;
     background: #22222244;
     padding: 10px 20px;
+    @media (max-width: 550px) {
+        padding: 10px;
+    }
 }
 
 .left {
@@ -16,6 +19,7 @@
 }
 
 .right {
+    margin-top: 10px;
     width: 460px;
     margin-left: 10px;
 
@@ -34,25 +38,22 @@
 
 .left-nav-btns {
     width: 50%;
-}
-
-.left-nav-btns a {
-    font-size: 14px;
-    padding: 3px 10px;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-}
-
-.left-nav-btns a:first-child {
-    border-left: 1px solid white;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-
-.left-nav-btns a:last-child {
-    border-right: 1px solid white;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    a {
+        font-size: 14px;
+        padding: 3px 10px;
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+    }
+    a:first-child {
+        border-left: 1px solid white;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    a:last-child {
+        border-right: 1px solid white;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
 }
 
 .content {
@@ -68,17 +69,21 @@
     border: 1px solid white;
     border-radius: 10px;
     padding-left: 3px;
-}
-
-.inputdiv input {
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
+    input {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0);
+        border: none;
+    }
 }
 
 
 .left-content-nav-right {
     font-size: 13px;
+    overflow: hidden;
+    p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .contentcontainer {
@@ -112,12 +117,11 @@
     height: 28px;
     margin-top: 3px;
     padding-left: 3px;
+    p {
+        white-space: nowrap;
+    }
 }
 
-.content-item p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 .tasks {
     width: 18%;
 }
@@ -131,11 +135,9 @@
 }
 
 // RIGHT
-
-.right-nav p {
-    margin-left: 5px;
-}
-
 .right-nav {
     height: 29px;
+    p {
+        margin-left: 5px;
+    }
 }
