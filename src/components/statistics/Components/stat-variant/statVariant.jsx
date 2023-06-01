@@ -155,7 +155,7 @@ export const StatVariant = () => {
                                 <p>Всего задач:</p>
                             </div>
                         </div>
-                        <div className={`${variants['nav-btns']} df jcse fww w100`}>
+                        <div className={`${variants['nav-btns']} df fww w100`}>
                             <div className={`${variants.navbtn} df jcsb aic cp`}>
                                 <p>Печать</p>
                                 <HiOutlinePrinter size={20} />
