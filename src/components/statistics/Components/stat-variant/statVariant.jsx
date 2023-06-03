@@ -10,14 +10,45 @@ import { HiOutlinePrinter } from 'react-icons/hi'
 
 // librarys
 import axios from 'axios'
-import { Pagination } from '@mui/material';
+import { Pagination, createTheme, ThemeProvider } from '@mui/material';
+
+const theme = createTheme({
+    components: {
+        MuiPaginationItem: {
+            styleOverrides: {
+                root: {
+                    '&': {
+                        transition: '.3s ease-in-out',
+                        color: 'white',
+                        border: '1px solid white'
+                    },
+                    '&.MuiPaginationItem-ellipsis': {
+                        border: 'none'
+                    },
+                    '&.Mui-selected': {
+                        backgroundColor: 'white',
+                        color: 'black',
+                    },
+                    '&.Mui-selected:hover': {
+                        backgroundColor: 'white',
+                        color: 'black',
+                        transform: 'scale(1.08)',
+                    },
+                    '&.MuiPaginationItem-previousNext:hover': {
+                        transform: 'scale(1.08)',
+                    }
+                },
+            },
+        },
+    },
+});
 
 export const StatVariant = () => {
     const [tasks, setTasks] = useState([]);
     const [maxtasks, setMaxtasks] = useState(parseInt(localStorage.getItem("maxTasks") || 2));
     const [tasksPerPage, setTasksPerPage] = useState(2)
     const [currentPage, setCurrentPage] = useState(1)
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
     const [hideanswer, setHideanswer] = useState(true);
     const [visibletext, setVisibletext] = useState(false);
@@ -94,35 +125,28 @@ export const StatVariant = () => {
         };
         getTasks();
     }, []);
+
     const lastTasksIndex = currentPage * tasksPerPage
     const firstTasksIndex = lastTasksIndex - tasksPerPage
     const currentTasks = tasks.slice(firstTasksIndex, lastTasksIndex);
 
     const paginate = pageNumbers => {
         setCurrentPage(pageNumbers || 1);
-        loadingHandle()
     };
-
-    const loadingHandle = () => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-        }, 500);
-    }
 
     const minusHandler = () => {
         if (maxtasks <= 1) { return; }
         setMaxtasks(maxtasks => maxtasks - 1)
         localStorage.setItem("maxTasks", maxtasks - 1);
         window.dispatchEvent(new Event('storageUpdated'))
-        loadingHandle()
+        updTest()
     }
     const plusHandler = () => {
         if (maxtasks >= 40) { return; }
         setMaxtasks(maxtasks => maxtasks + 1)
         localStorage.setItem("maxTasks", maxtasks + 1);
         window.dispatchEvent(new Event('storageUpdated'))
-        loadingHandle()
+        updTest()
     }
 
     const hideNav = () => {
@@ -146,13 +170,13 @@ export const StatVariant = () => {
                     <>
                         <div className={`${variants['nav-tags']} df fww w100`}>
                             <div className={variants['nav-tags-item']}>
-                                <p>Всего задач:</p>
+                                <p>Всего задач: 195</p>
                             </div>
                             <div className={variants['nav-tags-item']}>
-                                <p>Всего задач:</p>
+                                <p>Правильных: 153</p>
                             </div>
                             <div className={variants['nav-tags-item']}>
-                                <p>Всего задач:</p>
+                                <p>Неправильных: 42</p>
                             </div>
                         </div>
                         <div className={`${variants['nav-btns']} df fww w100`}>
@@ -196,13 +220,16 @@ export const StatVariant = () => {
             </div>
             <div className={`${variants.bottom} w100`}>
                 <div className={`${variants['bottom-pagination']} w100 df jcc aic`}>
+                <ThemeProvider theme={theme}>
                     <Pagination
                         count={Math.ceil(tasks.length / tasksPerPage)}
                         onChange={(_, num) => paginate(num)}
+                        classes=''
                     />
+                </ThemeProvider>
                 </div>
                 <div className={`${variants['bottom-taskitem']} w100`}>
-                    {currentTasks.map((arr, ind) => <TasksList pagitasks={arr} loading={loading} testik={!hideanswer} key={ind} />)}
+                    {currentTasks.map((arr, ind) => <TasksList pagitasks={arr} testik={!hideanswer} key={ind} />)}
                 </div>
             </div>
         </div>

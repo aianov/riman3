@@ -14,12 +14,11 @@ import StarAnimation from "../../sky/star"
 import './index.scss'
 
 export const BgAnim = () => {
-    // Эта часть смотрит если вы находитесь на части сайта tasks то анимация убирается
-    // const url = window.location.href
-    // const urlresult = url.indexOf('tasks')
-    // if (urlresult === 22) {
-    //     return <></>;
-    // } else {
+    const url = window.location.href
+    const urlresult = url.indexOf('tasks')
+    if (urlresult === 22) {
+        return <></>;
+    } else {
         return (
             <div className="sketch">
                 <Ring1 speed={0.15} sz1={450} sz2={450} xcoor={400} ycoor={400} />
@@ -53,4 +52,5 @@ export const BgAnim = () => {
                 <div className="star17 stars"></div>
             </div>
         )
+    }
 }

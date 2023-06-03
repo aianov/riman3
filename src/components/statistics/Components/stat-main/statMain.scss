@@ -329,6 +329,10 @@
     }
 }
 
+.stat__bottom-middle__stat-main__bar-crit p:last-child {
+    margin-right: 10px;
+}
+
 .stat__bottom-middle__stat-main__main-item * {
     height: inherit;
 }
@@ -629,7 +633,11 @@
     height: 100%;
     width: 100%;
 }
-
+@media (max-width: 730px) {
+    .stat__bottom {
+        border: 1px solid white;
+    }
+}
 @media (max-width: 550px) {
     .stat__bottom {
         padding: 10px 7.5px;

@@ -5,7 +5,6 @@ import axios from 'axios';
 import mylogo from '../../pages/main-page/images/logo.jpg';
 import tasksDark from '../../pages/main-page/images/bg2.png'
 import tasksLight from './images/tasksLight.png'
-import generation from './images/generation.gif'
 
 // COMPONENTS
 import { useTheme } from '../../hooks/usetheme';
@@ -29,6 +28,10 @@ const theme = createTheme({
                     '&': {
                         transition: '.3s ease-in-out',
                         color: 'white',
+                        border: '1px solid white'
+                    },
+                    '&.MuiPaginationItem-ellipsis': {
+                        border: 'none'
                     },
                     '&.Mui-selected': {
                         backgroundColor: 'white',
@@ -345,7 +348,11 @@ export const Tasks = () => {
                                             {showgeneration ?
                                                 <div className="tasks-rightbar-generation df fdc aic w100">
                                                     <p className='w100 df jcc aic'>Укажи параметри и нажми кнопку "создать"</p>
-                                                    <img src={generation} alt="Обезянка :)" />
+                                                    <div className="mainloader">
+                                                        <div class="loader">
+                                                            <div className="loader2"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 :
                                                 <>

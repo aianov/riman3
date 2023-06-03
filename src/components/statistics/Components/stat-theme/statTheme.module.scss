@@ -8,20 +8,30 @@
     @media (max-width: 550px) {
         padding: 10px;
     }
-}
-
-.left {
-    width: 460px;
-
-    @media screen and (max-width: 1573px) {
-        width: 100%;
+    @media (max-width: 730px) {
+        &, .content {
+            border: 1px solid white;
+        }
     }
 }
 
+@media (max-width: 1573px) {
+    .wrapperthemes {
+        display: block;
+    }
+}
+
+.left {
+    width: 100%;
+    @media screen and (max-width: 1573px) {
+        width: 100%;
+    }
+    margin-right: 5px;
+}
+
 .right {
-    margin-top: 10px;
-    width: 460px;
-    margin-left: 10px;
+    width: 100%;
+    margin-left: 5px;
 
     @media screen and (max-width: 1573px) {
         width: 100%;

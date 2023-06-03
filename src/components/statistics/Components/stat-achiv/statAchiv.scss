@@ -5,7 +5,6 @@
 .statachiv-navbar {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
     margin-bottom: 5px;
 }
 
@@ -28,7 +27,6 @@
     height: 180px;
     margin-top: 10px;
     .statachiv-slider-item-text {
-        height: 40%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -38,7 +36,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 60%;
         width: 100%;
         img {
             height: 100px;

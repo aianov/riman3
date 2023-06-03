@@ -5,10 +5,9 @@ import mainLight from '../../pages/main-page/images/mainLight.png'
 import './sign-up.scss';
 
 import { NavLink } from 'react-router-dom';
-import { AiOutlineGoogle } from 'react-icons/ai';
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { CiDark, CiLight } from 'react-icons/ci'
-import { SlSocialVkontakte } from 'react-icons/sl'
+import { SlSocialVkontakte, SlSocialGoogle } from 'react-icons/sl'
 import { nanoid } from 'nanoid';
 
 import { useTheme } from '../../hooks/usetheme'
@@ -282,7 +281,7 @@ export const SignUp = () => {
                     <SlSocialVkontakte style={{fontSize: '25px'}} className='vk socico'/>
                   </div>
                   <div className="regwindow__socials-google socdiv">
-                    <AiOutlineGoogle className="google socico" />
+                    <SlSocialGoogle className="google socico" />
                   </div>
                 </div>
               </div>

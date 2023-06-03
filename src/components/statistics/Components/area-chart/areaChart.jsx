@@ -100,7 +100,7 @@ export const data = {
     datasets: [
         {
             fill: false,
-            label: 'Я же говорил что ты гей',
+            label: 'Тестовый график',
             data: [40, 50, 60, 70],
             borderColor: 'rgb(255, 255, 255)',
             backgroundColor: 'rgb(255, 255, 255)',

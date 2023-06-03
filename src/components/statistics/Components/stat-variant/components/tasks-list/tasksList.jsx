@@ -3,7 +3,7 @@ import list from './tasksList.module.scss';
 
 import { BiMinus, BiPlus } from 'react-icons/bi';
 
-export const TasksList = ({ pagitasks, loading, testik }) => {
+export const TasksList = ({ pagitasks, testik }) => {
     const [showanswer, setShowanswer] = useState(false);
     const [icon, setIcon] = useState('');
 

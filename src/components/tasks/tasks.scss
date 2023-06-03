@@ -1040,6 +1040,35 @@
     border-bottom: 3px solid white;
 }
 
+.mainloader {
+    border: 3.8px solid white;
+    width: 130px;
+    height: 130px;
+    margin: 30px 0px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    border: 17px solid rgba(0, 0, 0, 0);
+    border-top: 17px solid #ffffff;
+    width: 115px;
+    border-radius: 50%;
+    height: 115px;
+    animation: spin 2s linear infinite;
+}   
+
+.tasks-rightbar-generation p {
+    padding: 0px 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 730px) {
     .tasks__bars {
         display: block;
@@ -1064,6 +1093,10 @@
     }
 
     .tasks-leftbarcontent__inp1 {
+        border: 1px solid white;
+    }
+
+    .stat__bottom {
         border: 1px solid white;
     }
 

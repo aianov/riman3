@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import themes from './statTheme.module.scss'
 
 import { Link } from 'react-router-dom';
-import { AiFillMinusSquare } from 'react-icons/ai';
+import { BiLeftArrowAlt } from 'react-icons/bi';
 import { BiSearch } from 'react-icons/bi';
 
 import Skeleton from 'react-loading-skeleton';
@@ -57,8 +57,30 @@ export const StatTheme = () => {
         { item: "Планиметрия", tasks: "600", proc: "62", time: "4ч 20м" },
         { item: "Алгебра", tasks: null, proc: null, time: null },
     ]
+    const items2 = [
+        { item: "Алгебра", tasks: "32", proc: "90", time: "2ч 12м" },
+        { item: "Планиметрия", tasks: "75", proc: "25", time: "3ч 20м" },
+        { item: "Алгебра", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+        { item: "Алгебра", tasks: "32", proc: "90", time: "2ч 12м" },
+        { item: "Планиметрия", tasks: "75", proc: "25", time: "3ч 20м" },
+        { item: "Алгебра", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+        { item: "Алгебра", tasks: "32", proc: "90", time: "2ч 12м" },
+        { item: "Планиметрия", tasks: "75", proc: "25", time: "3ч 20м" },
+        { item: "Алгебра", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+        { item: "Алгебра", tasks: "32", proc: "90", time: "2ч 12м" },
+        { item: "Планиметрия", tasks: "75", proc: "25", time: "3ч 20м" },
+        { item: "Алгебра", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+    ];
     const [items, setItems] = useState([...virtualApi]);
-    const [itemsright, setItemsRight] = useState([...virtualApi]);
+    const [itemsright, setItemsRight] = useState([...items2]);
 
     // ===================== inputs for search =====================
     function leftSearch(e) {
@@ -88,7 +110,7 @@ export const StatTheme = () => {
 
     function rightSearch(e) {
         const str = e.toLowerCase()
-        const rightarr = virtualApi;
+        const rightarr = items2;
         for (let i = 0; i < rightarr.length; i++) { rightarr[i].item = rightarr[i].item.toLowerCase() }
         const res = rightarr.filter(item => item.item.indexOf(str) === 0);
         if (res.length >= 1) {
@@ -112,13 +134,12 @@ export const StatTheme = () => {
 
     return (
         <div className={themes.main}>
-            <div className={`${themes.nav} df jcfe w100`}>
-                <Link to='/tasks/statistics' className={`${themes['nav-exit']} cp cw tdn df aic`}>
-                    <AiFillMinusSquare size={20} />
-                    <span>скрыть</span>
-                </Link>
+            <div className={`${themes.nav} df w100`}>
+                <div className="regwindow__leftarrow">
+                    <Link to="/tasks/statistics"><BiLeftArrowAlt size={22} className="regwindow__leftarrowico" /></Link>
+                </div>
             </div>
-            <div className='df w100 fww jcc'>
+            <div className={`${themes.wrapperthemes} df w100 aic jcc`}>
                 {/* ====================== LEFT ====================== */}
                 <div className={`${themes.left}`}>
                     <div className={`${themes['left-nav']} w100`}>

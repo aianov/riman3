@@ -20,10 +20,14 @@ export const StatMain = () => {
     const [themeMid, setThemeMid] = useState(false)
     const [itemLoad, setItemLoad] = useState(false)
     const [itemError, setItemError] = useState(false)
+    const [item2Load, setItem2Load] = useState(false)
+    const [item2Error, setItem2Error] = useState(false)
 
     const [search, setSearch] = useState('')
+    const [search2, setSearch2] = useState('')
 
     const debouncedSearch = useDebounce(midSearch, 500)
+    const debouncedSearch2 = useDebounce(mathSearch, 500)
 
     const bottomBtns = (btn) => {
         setVariant(false)
@@ -100,7 +104,40 @@ export const StatMain = () => {
             time: null,
         },
     ]
+    const items2 = [
+        {
+            item: "Алгебра",
+            tasks: "32",
+            proc: "90",
+            time: "2ч 12м"
+        },
+        {
+            item: "Планиметрия",
+            tasks: "75",
+            proc: "25",
+            time: "3ч 20м"
+        },
+        {
+            item: "Алгебра",
+            tasks: null,
+            proc: null,
+            time: null,
+        },
+        {
+            item: "Геометрия",
+            tasks: null,
+            proc: null,
+            time: null,
+        },
+        {
+            item: "Геометрия",
+            tasks: null,
+            proc: null,
+            time: null,
+        },
+    ]
     const [midItems, setMidItems] = useState([...items]);
+    const [mathItems, setMathItems] = useState([...items2]);
 
     function midSearch(e) {
         const str = e.toLowerCase()
@@ -129,6 +166,35 @@ export const StatMain = () => {
         setItemLoad(true)
         setSearch(e)
         debouncedSearch(e)
+    }
+
+    function mathSearch(e) {
+        const str = e.toLowerCase()
+        const itemArr = items2;
+        for (let i = 0; i < itemArr.length; i++) {
+            itemArr[i].item = itemArr[i].item.toLowerCase()
+        }
+        const res = itemArr.filter(item => item.item.indexOf(str) === 0);
+        if (res.length >= 1) {
+            const itemsArray = res;
+            for (let i = 0; i < res.length; i++) {
+                itemsArray[i].item = res[i].item.charAt(0).toUpperCase() + res[i].item.slice(1);
+            }
+            setMathItems(itemsArray)
+            setItem2Load(false)
+        } else {
+            setMidItems([])
+            setItem2Load(false)
+            setItem2Error(true)
+        }
+    }
+
+    const mathOnChange = (e) => {
+        if (!/^[а-яА-Я]*$/.test(e)) { return; }
+        setItem2Error(false)
+        setItem2Load(true)
+        setSearch2(e)
+        debouncedSearch2(e)
     }
 
     return (
@@ -212,8 +278,8 @@ export const StatMain = () => {
                     <div className="stat__bottom-middle__stat-main">
                         <div className="stat__bottom-middle__stat-main__bar">
                             <div className="stat__bottom-middle__stat-main__bar-search">
-                                <div className="stat__bottom-middle__stat-main__bar-search-div" style={{backgroundColor: '#22222244'}}>
-                                    <input maxLength={10} onChange={e => midOnChange(e.target.value)} value={search} type="text" placeholder='поиск'/>
+                                <div className="stat__bottom-middle__stat-main__bar-search-div" style={{ backgroundColor: '#22222244' }}>
+                                    <input maxLength={10} onChange={e => midOnChange(e.target.value)} value={search} type="text" placeholder='поиск' />
                                     <BiSearch />
                                 </div>
                             </div>
@@ -225,7 +291,7 @@ export const StatMain = () => {
                         </div>
                         {itemLoad ? (
                             <div className='stat-bottom-itemload'>
-                                <Skeleton count={midItems.length}/>
+                                <Skeleton count={midItems.length} />
                             </div>
                         ) : (
                             <div className="stat__bottom-middle__stat-main__main">
@@ -259,7 +325,10 @@ export const StatMain = () => {
                     <div className="stat__bottom-middle__math-main">
                         <div className="stat__bottom-middle__stat-main__bar">
                             <div className="stat__bottom-middle__stat-main__bar-search">
-                                {/* asd */}
+                                <div className="stat__bottom-middle__stat-main__bar-search-div" style={{ backgroundColor: '#22222244' }}>
+                                    <input maxLength={10} onChange={e => mathOnChange(e.target.value)} value={search2} type="text" placeholder='поиск' />
+                                    <BiSearch />
+                                </div>
                             </div>
                             <div className="stat__bottom-middle__stat-main__bar-crit">
                                 <p>кол-во<br />задач</p>
@@ -267,38 +336,27 @@ export const StatMain = () => {
                                 <p>время</p>
                             </div>
                         </div>
-                        <div className="stat__bottom-middle__math-main__main">
-                            <div className="stat__bottom-middle__math-main__main-item">
-                                <p className='stat__bottom-middle__math-main__main-item-item'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item1'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item2'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item3'>a</p>
+                        {item2Load ? (
+                            <div className='stat-bottom-itemload'>
+                                <Skeleton count={mathItems.length} />
                             </div>
-                            <div className="stat__bottom-middle__math-main__main-item">
-                                <p className='stat__bottom-middle__math-main__main-item-item'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item1'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item2'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item3'>a</p>
+                        ) : (
+                            <div className="stat__bottom-middle__math-main__main">
+                                {mathItems.map((arr, ind) => (
+                                    <div className="stat__bottom-middle__stat-main__main-item" key={ind}>
+                                        <p className='stat__bottom-middle__stat-main__main-item-item'>{arr.item ? arr.item : ''}</p>
+                                        <p className='stat__bottom-middle__stat-main__main-item1'>{arr.tasks ? arr.tasks : ''}</p>
+                                        <p className='stat__bottom-middle__stat-main__main-item2'>{arr.proc ? arr.proc : ''}</p>
+                                        <p className='stat__bottom-middle__stat-main__main-item3'>{arr.time ? arr.time : ''}</p>
+                                    </div>
+                                ))}
                             </div>
-                            <div className="stat__bottom-middle__math-main__main-item">
-                                <p className='stat__bottom-middle__math-main__main-item-item'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item1'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item2'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item3'>a</p>
+                        )}
+                        {item2Error ? (
+                            <div className="mid-item-loaderror df jcc aic">
+                                <h1>Ничего не найдено :(</h1>
                             </div>
-                            <div className="stat__bottom-middle__math-main__main-item">
-                                <p className='stat__bottom-middle__math-main__main-item-item'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item1'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item2'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item3'>a</p>
-                            </div>
-                            <div className="stat__bottom-middle__math-main__main-item">
-                                <p className='stat__bottom-middle__math-main__main-item-item'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item1'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item2'>a</p>
-                                <p className='stat__bottom-middle__math-main__main-item3'>a</p>
-                            </div>
-                        </div>
+                        ) : null}
                     </div>
                 </div>
             </div>

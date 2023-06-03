@@ -4,7 +4,7 @@ import { LogIn } from './components/log-in/sign-in';
 import { SignUp } from './components/sign-up/sign-up';
 import { SkeletonTheme } from "react-loading-skeleton";
 import { Tasks } from "./components/tasks/tasks";
-// import { BgAnim } from './components/bg-anim/BgAnim'
+import { BgAnim } from './components/bg-anim/BgAnim'
 import './App.scss';
 
 //fonts
@@ -14,7 +14,7 @@ function App() {
   return (
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
     <Router>
-      {/* <BgAnim /> */}
+      <BgAnim />
       <div className="main">
         <div className="main-container">
           <Routes>

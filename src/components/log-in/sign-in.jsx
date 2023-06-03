@@ -5,10 +5,9 @@ import mainLight from '../../pages/main-page/images/mainLight.png'
 import './sign-in.scss';
 
 import { NavLink } from 'react-router-dom';
-import { AiOutlineGoogle } from 'react-icons/ai';
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { CiDark, CiLight } from 'react-icons/ci'
-import { SlSocialVkontakte } from 'react-icons/sl'
+import { SlSocialVkontakte, SlSocialGoogle } from 'react-icons/sl'
 
 import { useTheme } from '../../hooks/usetheme'
 
@@ -18,14 +17,6 @@ export const LogIn = () => {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const ifNone = "Поле не может быть пустым"
-
-  // VALIDATION TRUE/FALSE
-  // const [loginError, setLoginError] = useState(false)
-  // const [loginErrorText, setLoginErrorText] = useState('')
-  // const [loginValid, setLoginValid] = useState(false)
-  // const [passwordError, setPasswordError] = useState(false)
-  // const [passwordErrorText, setPasswordErrorText] = useState('')
-  // const [passwordValid, setPasswordValid] = useState(false)
 
   // [API] FOR CHECKING IF AUTH CONST'S:
   const [notauth, setNotAuth] = useState(false)
@@ -174,7 +165,7 @@ export const LogIn = () => {
                     <SlSocialVkontakte style={{ fontSize: '25px' }} className='vk socico' />
                   </div>
                   <div className="logwindow__socials-google socdiv">
-                    <AiOutlineGoogle className="google socico" />
+                    <SlSocialGoogle className="google socico" />
                   </div>
                 </div>
               </div>
