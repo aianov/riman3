@@ -93,7 +93,7 @@ function FilterDir({ id, onDeleteDir }) {
 }
 
 export const TasksFilters = ({ setShowgeneration, visibletext }) => {
-    const [maxVal, setMaxVal] = useState(parseInt(localStorage.getItem("maxTasks")) || 2)
+    // const [maxVal, setMaxVal] = useState(parseInt(localStorage.getItem("maxTasks")) || 2)
     const [timerHours, setTimerHours] = useState(parseInt(localStorage.getItem("timerHours")) || 0)
     const [timerMinutes, setTimerMinutes] = useState(parseInt(localStorage.getItem("timerMinutes")) || 0)
     if (timerHours === 0 && timerMinutes === 0) {
@@ -103,7 +103,7 @@ export const TasksFilters = ({ setShowgeneration, visibletext }) => {
     const [timerHide, setTimerHide] = useToggle(false);
     const [timerIcon, setTimerIcon] = useToggle(true)
 
-    const [tasksMax, setTasksMax] = useState()
+    // const [tasksMax, setTasksMax] = useState()
 
     // ДЛЯ ФИЛЬТРОВ
     const [filtersPodtip, setFiltersPodtip] = useState([]);
@@ -148,43 +148,43 @@ export const TasksFilters = ({ setShowgeneration, visibletext }) => {
 
     // ФИЛЬТРЫ И КНОПКИ ДЛЯ НИХ
     // МАКСИМ. ЗАДАЧ НА СТРАНИЦЕ
-    const maxTasks = (which) => {
-        if (which === "minus") {
-            if (maxVal > 1) {
-                setMaxVal(maxVal => maxVal - 1)
-                localStorage.setItem("maxTasks", maxVal - 1);
-                setTasksMax(tasksMax => parseInt(tasksMax) - 1)
-                window.dispatchEvent(new Event('storageUpdated'))
-            }
-        }
-        if (which === "plus") {
-            if (maxVal < 40) {
-                setMaxVal(maxVal => maxVal + 1)
-                localStorage.setItem("maxTasks", maxVal + 1);
-                setTasksMax(tasksMax => parseInt(tasksMax) + 1)
-                window.dispatchEvent(new Event('storageUpdated'))
-            }
-        }
-    }
+    // const maxTasks = (which) => {
+    //     if (which === "minus") {
+    //         if (maxVal > 1) {
+    //             setMaxVal(maxVal => maxVal - 1)
+    //             localStorage.setItem("maxTasks", maxVal - 1);
+    //             setTasksMax(tasksMax => parseInt(tasksMax) - 1)
+    //             window.dispatchEvent(new Event('storageUpdated'))
+    //         }
+    //     }
+    //     if (which === "plus") {
+    //         if (maxVal < 40) {
+    //             setMaxVal(maxVal => maxVal + 1)
+    //             localStorage.setItem("maxTasks", maxVal + 1);
+    //             setTasksMax(tasksMax => parseInt(tasksMax) + 1)
+    //             window.dispatchEvent(new Event('storageUpdated'))
+    //         }
+    //     }
+    // }
 
-    const tasksHandler = (e) => {
-        if (e === '') {
-            setTasksMax(0)
-            return;
-        }
-        if (!/^[0-9]*$/.test(e)) { return; }
-        if (parseInt(e) > 40 || parseInt(e) < 1) {
-            setTasksMax(1)
-            return;
-        }
-        setTasksMax(parseInt(e))
-    }
+    // const tasksHandler = (e) => {
+    //     if (e === '') {
+    //         setTasksMax(0)
+    //         return;
+    //     }
+    //     if (!/^[0-9]*$/.test(e)) { return; }
+    //     if (parseInt(e) > 40 || parseInt(e) < 1) {
+    //         setTasksMax(1)
+    //         return;
+    //     }
+    //     setTasksMax(parseInt(e))
+    // }
 
-    const blurHandler = () => {
-        setMaxVal(tasksMax)
-        localStorage.setItem("maxTasks", tasksMax);
-        window.dispatchEvent(new Event('storageUpdated'))
-    }
+    // const blurHandler = () => {
+    //     setMaxVal(tasksMax)
+    //     localStorage.setItem("maxTasks", tasksMax);
+    //     window.dispatchEvent(new Event('storageUpdated'))
+    // }
     // ТАЙМЕР
     const timerBtnMinus = () => {
         if (timerMinutes === 1) { return; }
@@ -261,10 +261,6 @@ export const TasksFilters = ({ setShowgeneration, visibletext }) => {
         setShowgeneration(false);
     }
 
-    useEffect(() => {
-        setTasksMax(`${maxVal}`)
-    }, [maxVal])
-
     return (
         <div className="tasks-leftbarcontent__top">
             <div className="tasks-leftbarcontent__clear-btn" onClick={deleteFilters}>
@@ -332,7 +328,7 @@ export const TasksFilters = ({ setShowgeneration, visibletext }) => {
                             </div>
                         </div>
                         {/* ЗАДАЧ НА СТРАНИЦЕ */}
-                        <div className="tasks-leftbarcontent__top-filters__maxtasks">
+                        {/* <div className="tasks-leftbarcontent__top-filters__maxtasks">
                             <span className="tasks-leftbarcontent__top-filters__maxtasks-title default-filter-text">Задач на странице:</span>
                             <div className="tasks-leftbarcontent__top-filters__maxtasks-btn">
                                 <span className='tasks-leftbarcontent__top-filters__maxtasks-btn__minus' onClick={() => maxTasks("minus")}>
@@ -343,7 +339,7 @@ export const TasksFilters = ({ setShowgeneration, visibletext }) => {
                                     <AiOutlinePlus size={20} />
                                 </span>
                             </div>
-                        </div>
+                        </div> */}
                         {/* ГЕНЕРАЦИЯ */}
                         <div className="tasks-leftbarcontent__top-filters-item__generation" onClick={() => setGeneric()}>
                             <span>Создать</span>

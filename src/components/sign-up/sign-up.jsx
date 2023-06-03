@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import mylogo from '../../pages/main-page/images/logo.jpg'
 import mainDark from '../../pages/main-page/images/bgc.png'
 import mainLight from '../../pages/main-page/images/mainLight.png'
@@ -15,7 +15,6 @@ import { useTheme } from '../../hooks/usetheme'
 
 export const SignUp = () => {
   const { setTheme } = useTheme();
-  const [bg, setBg] = useState()
 
   const mateDiv = document.querySelector(".regwindow__bar-mate")
   const teacherDiv = document.querySelector(".regwindow__bar-teacher")
@@ -217,38 +216,19 @@ export const SignUp = () => {
   //   }
   // })
 
-  useEffect(() => {
-    const dark = document.querySelector(".tasksdark");
-    const light = document.querySelector(".taskslight");
-    const currentTheme = localStorage.getItem("app-theme")
-    console.log(currentTheme)
-    if (currentTheme === "light") {
-      light.classList.toggle("themeico-hide");
-      dark.classList.toggle("themeico-hide");
-      setBg(false)
-    }
-    if (currentTheme === "dark") {
-      setBg(true)
-    }
-  }, [])
   const themeBtn = (val) => {
-    const dark = document.querySelector(".tasksdark");
-    const light = document.querySelector(".taskslight");
-    dark.classList.toggle("themeico-hide");
-    light.classList.toggle("themeico-hide");
-    console.log(val)
     if (val === "dark") {
       setTheme('dark')
-      setBg(true)
-    } else {
-      setTheme('light')
-      setBg(false)
+      localStorage.setItem("app-theme", 'dark')
+      return;
     }
+    setTheme('light')
+    localStorage.setItem("app-theme", 'light')
   }
 
   return (
     <>
-      <img className='sign-background' src={bg ? mainDark : mainLight} alt="background of sign-page" />
+      <img className='sign-background' src={localStorage.getItem("app-theme") === 'light' ? mainLight : mainDark} alt="background of sign-page" />
       <div className="main-logo">
         <img src={mylogo} alt="#" className='main-logo__logo' />
       </div>
@@ -261,8 +241,8 @@ export const SignUp = () => {
                   <NavLink to="/"><BiLeftArrowAlt size={25} className="regwindow__leftarrowico" /></NavLink>
                 </div>
                 <div className="sign-rightbar__list-theme">
-                  <CiLight onClick={() => themeBtn("light")} className='tasks-rightbar__list-theme__ico taskslight' size={25} />
-                  <CiDark onClick={() => themeBtn("dark")} className='tasks-rightbar__list-theme__ico tasksdark themeico-hide' size={25} />
+                  <CiLight onClick={() => themeBtn("light")} className={`tasks-rightbar__list-theme__ico taskslight ${localStorage.getItem("app-theme") === 'dark' ? '' : 'themeico-hide'}`} size={25} />
+                  <CiDark onClick={() => themeBtn("dark")} className={`tasks-rightbar__list-theme__ico tasksdark ${localStorage.getItem("app-theme") === 'dark' ? 'themeico-hide' : ''}`} size={25} />
                 </div>
               </div>
               <div className="regwindow__elements">

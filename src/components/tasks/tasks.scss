@@ -309,6 +309,11 @@
         display: flex;
         justify-content: center;
 
+        ul li button {
+            border: 1px solid white;
+            color: white;
+        }
+
         @media (max-width: 400px) {
             li {
                 width: 31.5px;
@@ -410,17 +415,21 @@
     background: #000000ad;
 }
 
-.tasks-leftbarcontent__top-filters__maxtasks-btn {
-    width: 100%;
-    background: #8281815e;
-    color: rgba(255, 255, 255, 0.616);
-    border: 1px solid #ffffff5d;
-    border-radius: 6px;
-    padding: 3px 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 25px;
+.tasks-leftbarcontent__top-filters__maxtasks {
+    margin: 0px 3px;
+    .tasks-leftbarcontent__top-filters__maxtasks-btn {
+        background: rgba(217, 217, 217, 0.02);
+        width: 100%;
+        backdrop-filter: blur(1.5px);
+        color: rgba(255, 255, 255, 0.616);
+        border: 2px solid white;
+        border-radius: 10px;
+        padding: 3px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 30px;
+    }
 }
 
 .tasks-leftbarcontent__top-filters__maxtasks-btn__podtip {
@@ -628,46 +637,6 @@
     margin-top: 1.2px;
 }
 
-/* PAGINATION */
-
-.MuiPagination-ul button {
-    color: white;
-    border: 1px solid white;
-}
-
-.MuiPaginationItem-circular.Mui-selected {
-    background-color: white;
-    border: 1px solid black;
-    color: black;
-}
-
-.MuiButtonBase-root.MuiPaginationItem-root.MuiPaginationItem-sizeMedium.MuiPaginationItem-text.MuiPaginationItem-circular.Mui-selected.MuiPaginationItem-page.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root {
-    background-color: white;
-    transition: .3s ease-in-out;
-}
-
-.MuiButtonBase-root.MuiPaginationItem-root.MuiPaginationItem-sizeMedium.MuiPaginationItem-text.MuiPaginationItem-circular.Mui-selected.MuiPaginationItem-page.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root:hover {
-    background-color: white;
-    border: 1px solid white;
-    color: black;
-    transform: scale(1.11);
-    transition: .3s ease-in-out;
-}
-
-.MuiButtonBase-root.MuiPaginationItem-root.MuiPaginationItem-sizeMedium.MuiPaginationItem-text.MuiPaginationItem-circular.MuiPaginationItem-previousNext.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root {
-    transition: .3s ease-in-out;
-}
-
-.MuiPaginationItem-previousNext:hover {
-    transform: scale(1.1);
-    transition: .3s ease-in-out;
-}
-
-.MuiPaginationItem-root.MuiPaginationItem-sizeMedium.MuiPaginationItem-text.MuiPaginationItem-circular.MuiPaginationItem-ellipsis.css-1v2lvtn-MuiPaginationItem-root {
-    color: white;
-    font-size: 20px;
-}
-
 .tasks-rightbar__navbar-tasks__navbar-btns {
     display: flex;
     align-items: flex-end;
@@ -754,6 +723,7 @@
 .tasks-rightbar__navbar-tasks__imagediv {
     margin-bottom: 10px;
     width: 100%;
+
     img {
         width: 100%;
         height: auto;
@@ -1038,13 +1008,16 @@
 .menu-list {
     font-size: 25px;
     margin-left: 10px;
+
     a {
         display: inline-block;
+
         p {
             display: inline-block;
         }
     }
 }
+
 .burger-menu {
     width: 30px;
     height: 20px;
@@ -1085,25 +1058,33 @@
         font-size: 25px;
         margin-left: 25px;
     }
+
     .tasks-leftbarcontent {
         border: 1px solid white;
     }
+
     .tasks-leftbarcontent__inp1 {
         border: 1px solid white;
     }
+
     .tasks-rightbar__navbar {
         border: 1px solid white;
-        input {
+
+        .tasks-inp, .tasks-leftbarcontent__top-filters__maxtasks-btn {
             border: 1px solid white;
         }
     }
+
     .tasks-rightbar__navbar-tasks {
         border: 1px solid white;
+
         .tasks-rightbar__navbar-tasks__imagediv {
             margin-bottom: 0;
         }
+
         .tasks-rightbar__navbar-tasks__navbar-bottom {
             align-items: flex-end;
+
             input {
                 border: 1px solid white;
                 height: 100%;
@@ -1156,6 +1137,7 @@
         backdrop-filter: blur(1px);
         transform: translateX(135%);
         transition: transform 0.3s ease;
+
         a {
             color: #fff;
             margin-top: 10px;

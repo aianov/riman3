@@ -9,7 +9,7 @@ import generation from './images/generation.gif'
 
 // COMPONENTS
 import { useTheme } from '../../hooks/usetheme';
-import { Pagination } from '@mui/material';
+import { Pagination, createTheme, ThemeProvider } from '@mui/material';
 import { TasksList } from './Components/tasksList';
 import { TasksFilters } from './Components/tasksFilters';
 import { Statistics } from '../statistics/statistics'
@@ -19,6 +19,34 @@ import { FiCopy, } from 'react-icons/fi'
 import { BiExport, } from 'react-icons/bi'
 import { HiOutlinePrinter, } from 'react-icons/hi'
 import { CiLight, CiDark, } from 'react-icons/ci'
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+
+const theme = createTheme({
+    components: {
+        MuiPaginationItem: {
+            styleOverrides: {
+                root: {
+                    '&': {
+                        transition: '.3s ease-in-out',
+                        color: 'white',
+                    },
+                    '&.Mui-selected': {
+                        backgroundColor: 'white',
+                        color: 'black',
+                    },
+                    '&.Mui-selected:hover': {
+                        backgroundColor: 'white',
+                        color: 'black',
+                        transform: 'scale(1.08)',
+                    },
+                    '&.MuiPaginationItem-previousNext:hover': {
+                        transform: 'scale(1.08)',
+                    }
+                },
+            },
+        },
+    },
+});
 
 export const Tasks = () => {
     const { setTheme } = useTheme();
@@ -26,8 +54,10 @@ export const Tasks = () => {
     const [bg, setBg] = useState(true)
     const [isCopy, setIsCopy] = useState(false);
     const [tasksPerPage, setTasksPerPage] = useState(localStorage.getItem("maxTasks") || 2)
+    const [maxVal, setMaxVal] = useState(parseInt(localStorage.getItem("maxTasks")) || 2)
     const [currentPage, setCurrentPage] = useState(1)
     const [tasks, setTasks] = useState([]);
+    const [tasksMax, setTasksMax] = useState()
 
     const [tasksClick, setTasksClick] = useState(false)
     const [statClick, setStatClick] = useState(false)
@@ -112,6 +142,44 @@ export const Tasks = () => {
         console.log(currentTasks)
     };
 
+    const tasksHandler = (e) => {
+        if (e === '') {
+            setTasksMax(0)
+            return;
+        }
+        if (!/^[0-9]*$/.test(e)) { return; }
+        if (parseInt(e) > 40 || parseInt(e) < 1) {
+            setTasksMax(1)
+            return;
+        }
+        setTasksMax(parseInt(e))
+    }
+
+    const blurHandler = () => {
+        setMaxVal(tasksMax)
+        localStorage.setItem("maxTasks", tasksMax);
+        window.dispatchEvent(new Event('storageUpdated'))
+    }
+
+    const maxTasks = (which) => {
+        if (which === "minus") {
+            if (maxVal > 1) {
+                setMaxVal(maxVal => maxVal - 1)
+                localStorage.setItem("maxTasks", maxVal - 1);
+                setTasksMax(tasksMax => parseInt(tasksMax) - 1)
+                window.dispatchEvent(new Event('storageUpdated'))
+            }
+        }
+        if (which === "plus") {
+            if (maxVal < 40) {
+                setMaxVal(maxVal => maxVal + 1)
+                localStorage.setItem("maxTasks", maxVal + 1);
+                setTasksMax(tasksMax => parseInt(tasksMax) + 1)
+                window.dispatchEvent(new Event('storageUpdated'))
+            }
+        }
+    }
+
     useEffect(() => {
         const url = window.location.href
         if (url.indexOf('statistics') === -1) { setTasksClick(true) }
@@ -161,6 +229,10 @@ export const Tasks = () => {
         burgerMenu.classList.toggle('open')
     }
 
+    useEffect(() => {
+        setTasksMax(`${maxVal}`)
+    }, [maxVal])
+
     return (
         <>
             <img className='tasks-background' src={bg ? tasksDark : tasksLight} alt="background of tasks-page" />
@@ -194,12 +266,12 @@ export const Tasks = () => {
                                 </div>
                                 <div class="menu">
                                     <div className="menu-list df fdc w100">
-                                    <Link onClick={taskBtn} to={tasksClick ? null : "/tasks"}>
-                                        <p className={tasksClick ? 'menu-selected' : ''}>Задачи</p>
-                                    </Link>
-                                    <Link onClick={statisticBtn} to={statClick ? null : "/tasks/statistics"}>
-                                        <p className={statClick ? 'menu-selected' : ''}>Статистика</p>
-                                    </Link>
+                                        <Link onClick={taskBtn} to={tasksClick ? null : "/tasks"}>
+                                            <p className={tasksClick ? 'menu-selected' : ''}>Задачи</p>
+                                        </Link>
+                                        <Link onClick={statisticBtn} to={statClick ? null : "/tasks/statistics"}>
+                                            <p className={statClick ? 'menu-selected' : ''}>Статистика</p>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -256,6 +328,17 @@ export const Tasks = () => {
                                     <div className="tasks-rightbar">
                                         <div className="tasks-rightbar__navbar">
                                             <input className="tasks-rightbar__navbar-search tasks-inp" placeholder='id задания или варианта' />
+                                            <div className="tasks-leftbarcontent__top-filters__maxtasks">
+                                                <div className="tasks-leftbarcontent__top-filters__maxtasks-btn">
+                                                    <span className='tasks-leftbarcontent__top-filters__maxtasks-btn__minus' onClick={() => maxTasks("minus")}>
+                                                        <AiOutlineMinus size={20} />
+                                                    </span>
+                                                    <input className='tasks-leftbarcontent__top-filters__maxtasks-btn__text' type="text" onChange={e => tasksHandler(e.target.value)} value={tasksMax} onBlur={blurHandler} />
+                                                    <span className='tasks-leftbarcontent__top-filters__maxtasks-btn__plus' onClick={() => maxTasks("plus")}>
+                                                        <AiOutlinePlus size={20} />
+                                                    </span>
+                                                </div>
+                                            </div>
                                             <input className="tasks-rightbar__navbar-variant tasks-inp" placeholder='свой вариант' />
                                         </div>
                                         <div className="tasks-rightbar__router-tasks">
@@ -267,10 +350,13 @@ export const Tasks = () => {
                                                 :
                                                 <>
                                                     <div className="tasks-rightbar__pages">
-                                                        <Pagination
-                                                            count={Math.ceil(tasks.length / tasksPerPage)}
-                                                            onChange={(_, num) => paginate(num)}
-                                                        />
+                                                        <ThemeProvider theme={theme}>
+                                                            <Pagination
+                                                                count={Math.ceil(tasks.length / tasksPerPage)}
+                                                                onChange={(_, num) => paginate(num)}
+                                                                classes=''
+                                                            />
+                                                        </ThemeProvider>
                                                     </div>
                                                     {currentTasks.map((arr, ind) => <TasksList pagitasks={arr} key={ind} />)}
                                                 </>
