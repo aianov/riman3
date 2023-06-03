@@ -16,7 +16,7 @@ import './index.scss'
 export const BgAnim = () => {
     const url = window.location.href
     const urlresult = url.indexOf('tasks')
-    if (urlresult === 22) {
+    if (urlresult !== -1) {
         return <></>;
     } else {
         return (
