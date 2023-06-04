@@ -22,10 +22,6 @@ export const Slider = () => {
     pngFiles.keys().forEach((key) => {
         images[key] = pngFiles(key);
     });
-    const pngFiles2 = require.context('../images/gg', true, /\.png$/);
-    Object.keys(images).forEach((_, key) => {
-        console.log(pngFiles2)
-    })
 
     const names = [
         'Hatiko', 'Qiwi', 'Fox', 'Crab', 'Lazy', 'Stubborn', 'Pretend', 'Whale',

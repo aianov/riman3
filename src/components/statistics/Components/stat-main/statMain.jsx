@@ -88,7 +88,7 @@ export const StatMain = () => {
     const [themeItems, setThemeItems] = useState([...items3]);
 
     function midSearch(e) {
-        if (variantMid) {
+        if (!variantMid) {
             const str = e.toLowerCase();
             const itemArr = items.map(item => ({ ...item, item: item.item.toLowerCase() }));
             const res = itemArr.filter(item => item.item.includes(str));
@@ -96,6 +96,7 @@ export const StatMain = () => {
                 const itemsArray = res.map(item => ({ ...item, item: item.item.charAt(0).toUpperCase() + item.item.slice(1) }));
                 setMidItems(itemsArray);
                 setItemLoad(false);
+                setItemError(false);
             } else {
                 setMidItems([]);
                 setItemLoad(false);
@@ -110,7 +111,9 @@ export const StatMain = () => {
             const itemsArray = res.map(item => ({ ...item, item: item.item.charAt(0).toUpperCase() + item.item.slice(1) }));
             setThemeItems(itemsArray);
             setItemLoad(false);
+            console.log("1")
         } else {
+            console.log("2")
             setThemeItems([]);
             setItemLoad(false);
             setItemError(true);
