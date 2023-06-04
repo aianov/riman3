@@ -15,8 +15,8 @@ function App() {
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
     <Router>
       <BgAnim />
-      <div className="main">
-        <div className="main-container">
+      <div className="main w100 h100vh">
+        <div className="main-container w100 h100vh">
           <Routes>
             <Route path='/' element={<MainPage />} />
             <Route path='/signin' element={<LogIn />} />

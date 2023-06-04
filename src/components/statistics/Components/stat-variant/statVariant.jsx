@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import variants from './statVariant.module.scss'
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // components
 import { TasksList } from './components/tasks-list/tasksList'
@@ -48,7 +50,7 @@ export const StatVariant = () => {
     const [maxtasks, setMaxtasks] = useState(parseInt(localStorage.getItem("maxTasks") || 2));
     const [tasksPerPage, setTasksPerPage] = useState(2)
     const [currentPage, setCurrentPage] = useState(1)
-    // const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const [hideanswer, setHideanswer] = useState(true);
     const [visibletext, setVisibletext] = useState(false);
@@ -122,6 +124,7 @@ export const StatVariant = () => {
                 return loadImage;
             }));
             setTasks(updatedTasks);
+            setLoading(false)
         };
         getTasks();
     }, []);
@@ -219,18 +222,32 @@ export const StatVariant = () => {
                     </>}
             </div>
             <div className={`${variants.bottom} w100`}>
-                <div className={`${variants['bottom-pagination']} w100 df jcc aic`}>
-                <ThemeProvider theme={theme}>
-                    <Pagination
-                        count={Math.ceil(tasks.length / tasksPerPage)}
-                        onChange={(_, num) => paginate(num)}
-                        classes=''
-                    />
-                </ThemeProvider>
-                </div>
-                <div className={`${variants['bottom-taskitem']} w100`}>
-                    {currentTasks.map((arr, ind) => <TasksList pagitasks={arr} testik={!hideanswer} key={ind} />)}
-                </div>
+                {loading ?
+                    <>
+                        <div className={`${variants['bottom-pagination-skeleton']} w100 tac`}>
+                            <Skeleton />
+                        </div>
+                        {[...Array(maxtasks)].map((_, index) => (
+                            <div key={index} className={`${variants['bottom-taskitem-skeleton']} w100`}>
+                                <Skeleton />
+                            </div>
+                        ))}
+                    </>
+                    :
+                    <>
+                        <div className={`${variants['bottom-pagination']} w100 df jcc aic`}>
+                            <ThemeProvider theme={theme}>
+                                <Pagination
+                                    count={Math.ceil(tasks.length / tasksPerPage)}
+                                    onChange={(_, num) => paginate(num)}
+                                />
+                            </ThemeProvider>
+                        </div>
+                        <div className={`${variants['bottom-taskitem']} w100`}>
+                            {currentTasks.map((arr, ind) => <TasksList pagitasks={arr} testik={!hideanswer} key={ind} />)}
+                        </div>
+                    </>
+                }
             </div>
         </div>
     )

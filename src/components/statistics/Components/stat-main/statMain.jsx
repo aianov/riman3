@@ -38,20 +38,7 @@ export const StatMain = () => {
         if (btn === 3) { setTask(true) }
     }
 
-    const monthNames = [
-        "январь",
-        "февраль",
-        "март",
-        "апрель",
-        "май",
-        "июнь",
-        "июль",
-        "август",
-        "сентябрь",
-        "октябрь",
-        "ноябрь",
-        "декабрь"
-    ];
+    const monthNames = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
 
     // Получаем текущую дату и месяц (от 0 до 11)
     const currentDate = new Date();
@@ -73,95 +60,65 @@ export const StatMain = () => {
     }
 
     const items = [
-        {
-            item: "Геометрия",
-            tasks: "720",
-            proc: "64",
-            time: "6ч 30м"
-        },
-        {
-            item: "Планиметрия",
-            tasks: "600",
-            proc: "62",
-            time: "4ч 20м"
-        },
-        {
-            item: "Алгебра",
-            tasks: null,
-            proc: null,
-            time: null,
-        },
-        {
-            item: "Геометрия",
-            tasks: null,
-            proc: null,
-            time: null,
-        },
-        {
-            item: "Алгебра",
-            tasks: null,
-            proc: null,
-            time: null,
-        },
-    ]
+        { item: "Геометрия", tasks: "720", proc: "64", time: "6ч 30м" },
+        { item: "Планиметрия", tasks: "600", proc: "62", time: "4ч 20м" },
+        { item: "Алгебра", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+        { item: "Алгебра", tasks: null, proc: null, time: null },
+    ];
+
     const items2 = [
-        {
-            item: "Алгебра",
-            tasks: "32",
-            proc: "90",
-            time: "2ч 12м"
-        },
-        {
-            item: "Планиметрия",
-            tasks: "75",
-            proc: "25",
-            time: "3ч 20м"
-        },
-        {
-            item: "Алгебра",
-            tasks: null,
-            proc: null,
-            time: null,
-        },
-        {
-            item: "Геометрия",
-            tasks: null,
-            proc: null,
-            time: null,
-        },
-        {
-            item: "Геометрия",
-            tasks: null,
-            proc: null,
-            time: null,
-        },
-    ]
+        { item: "Алгебра", tasks: "32", proc: "90", time: "2ч 12м" },
+        { item: "Планиметрия", tasks: "75", proc: "25", time: "3ч 20м" },
+        { item: "Алгебра", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+        { item: "Геометрия", tasks: null, proc: null, time: null },
+    ];
+
+    const items3 = [
+        { item: "Вариант 5", tasks: "720", proc: "64", time: "6ч 30м" },
+        { item: "Вариант 1", tasks: "600", proc: "62", time: "4ч 20м" },
+        { item: "Вариант 4", tasks: null, proc: null, time: null },
+        { item: "Вариант 2", tasks: null, proc: null, time: null },
+        { item: "Вариант 3", tasks: null, proc: null, time: null },
+    ];
+
     const [midItems, setMidItems] = useState([...items]);
     const [mathItems, setMathItems] = useState([...items2]);
+    const [themeItems, setThemeItems] = useState([...items3]);
 
     function midSearch(e) {
-        const str = e.toLowerCase()
-        const itemArr = items;
-        for (let i = 0; i < itemArr.length; i++) {
-            itemArr[i].item = itemArr[i].item.toLowerCase()
-        }
-        const res = itemArr.filter(item => item.item.indexOf(str) === 0);
-        if (res.length >= 1) {
-            const itemsArray = res;
-            for (let i = 0; i < res.length; i++) {
-                itemsArray[i].item = res[i].item.charAt(0).toUpperCase() + res[i].item.slice(1);
+        if (variantMid) {
+            const str = e.toLowerCase();
+            const itemArr = items.map(item => ({ ...item, item: item.item.toLowerCase() }));
+            const res = itemArr.filter(item => item.item.includes(str));
+            if (res.length >= 1) {
+                const itemsArray = res.map(item => ({ ...item, item: item.item.charAt(0).toUpperCase() + item.item.slice(1) }));
+                setMidItems(itemsArray);
+                setItemLoad(false);
+            } else {
+                setMidItems([]);
+                setItemLoad(false);
+                setItemError(true);
             }
-            setMidItems(itemsArray)
-            setItemLoad(false)
+            return;
+        }
+        const str = e.toLowerCase();
+        const itemArr = items3.map(item => ({ ...item, item: item.item.toLowerCase() }));
+        const res = itemArr.filter(item => item.item.includes(str));
+        if (res.length >= 1) {
+            const itemsArray = res.map(item => ({ ...item, item: item.item.charAt(0).toUpperCase() + item.item.slice(1) }));
+            setThemeItems(itemsArray);
+            setItemLoad(false);
         } else {
-            setMidItems([])
-            setItemLoad(false)
-            setItemError(true)
+            setThemeItems([]);
+            setItemLoad(false);
+            setItemError(true);
         }
     }
 
     const midOnChange = (e) => {
-        if (!/^[а-яА-Я]*$/.test(e)) { return; }
+        if (!/^[а-яА-Я0-9\s]*$/.test(e)) { return; }
         setItemError(false)
         setItemLoad(true)
         setSearch(e)
@@ -169,28 +126,22 @@ export const StatMain = () => {
     }
 
     function mathSearch(e) {
-        const str = e.toLowerCase()
-        const itemArr = items2;
-        for (let i = 0; i < itemArr.length; i++) {
-            itemArr[i].item = itemArr[i].item.toLowerCase()
-        }
-        const res = itemArr.filter(item => item.item.indexOf(str) === 0);
+        const str = e.toLowerCase();
+        const itemArr = items2.map(item => ({ ...item, item: item.item.toLowerCase() }));
+        const res = itemArr.filter(item => item.item.includes(str));
         if (res.length >= 1) {
-            const itemsArray = res;
-            for (let i = 0; i < res.length; i++) {
-                itemsArray[i].item = res[i].item.charAt(0).toUpperCase() + res[i].item.slice(1);
-            }
-            setMathItems(itemsArray)
-            setItem2Load(false)
+            const itemsArray = res.map(item => ({ ...item, item: item.item.charAt(0).toUpperCase() + item.item.slice(1) }));
+            setMathItems(itemsArray);
+            setItem2Load(false);
         } else {
-            setMidItems([])
-            setItem2Load(false)
-            setItem2Error(true)
+            setMathItems([]);
+            setItem2Load(false);
+            setItem2Error(true);
         }
     }
 
     const mathOnChange = (e) => {
-        if (!/^[а-яА-Я]*$/.test(e)) { return; }
+        if (!/^[а-яА-Я0-9\s]*$/.test(e)) { return; }
         setItem2Error(false)
         setItem2Load(true)
         setSearch2(e)
@@ -262,13 +213,13 @@ export const StatMain = () => {
                 {/* СТАТИСТИКА */}
                 <div className="stat__bottom-middle__stat">
                     <div className="stat__bottom-middle__stat-bar">
-                        <div className="stat__bottom-middle__stat-bar__btns">
-                            <Link onClick={() => midBtns(1)} to={variantMid ? null : '/tasks/statistics/variants'} style={variantMid ? { backgroundColor: 'white', color: 'black' } : { backgroundColor: 'rgb(0, 0, 0, 0)' }}>
+                        <div className="stat__bottom-middle__stat-bar__btns cp">
+                            <p onClick={() => midBtns(1)} style={variantMid ? { backgroundColor: 'white', color: 'black' } : { backgroundColor: 'rgb(0, 0, 0, 0)' }}>
                                 Варианты
-                            </Link>
-                            <Link onClick={() => midBtns(2)} to={themeMid ? null : '/tasks/statistics/themes'} style={themeMid ? { backgroundColor: 'white', color: 'black' } : { backgroundColor: 'rgb(0, 0, 0, 0)' }}>
+                            </p>
+                            <p onClick={() => midBtns(2)} style={themeMid ? { backgroundColor: 'white', color: 'black' } : { backgroundColor: 'rgb(0, 0, 0, 0)' }}>
                                 Темы
-                            </Link>
+                            </p>
                         </div>
                         <Link to="/tasks/statistics/themes" className="stat__bottom-middle__stat-bar__more">
                             <TbSquareRoundedPlusFilled size={17.5} />
@@ -295,14 +246,29 @@ export const StatMain = () => {
                             </div>
                         ) : (
                             <div className="stat__bottom-middle__stat-main__main">
-                                {midItems.map((arr, ind) => (
-                                    <div className="stat__bottom-middle__stat-main__main-item" key={ind}>
-                                        <p className='stat__bottom-middle__stat-main__main-item-item'>{arr.item ? arr.item : ''}</p>
-                                        <p className='stat__bottom-middle__stat-main__main-item1'>{arr.tasks ? arr.tasks : ''}</p>
-                                        <p className='stat__bottom-middle__stat-main__main-item2'>{arr.proc ? arr.proc : ''}</p>
-                                        <p className='stat__bottom-middle__stat-main__main-item3'>{arr.time ? arr.time : ''}</p>
+                                {!variantMid ? (
+                                    <div>
+                                        {midItems.map((arr, ind) => (
+                                            <div className="stat__bottom-middle__stat-main__main-item" key={ind}>
+                                                <p className='stat__bottom-middle__stat-main__main-item-item'>{arr.item ? arr.item : ''}</p>
+                                                <p className='stat__bottom-middle__stat-main__main-item1'>{arr.tasks ? arr.tasks : ''}</p>
+                                                <p className='stat__bottom-middle__stat-main__main-item2'>{arr.proc ? arr.proc : ''}</p>
+                                                <p className='stat__bottom-middle__stat-main__main-item3'>{arr.time ? arr.time : ''}</p>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
+                                ) : (
+                                    <div>
+                                        {themeItems.map((arr, ind) => (
+                                            <div className="stat__bottom-middle__stat-main__main-item" key={ind}>
+                                                <p className='stat__bottom-middle__stat-main__main-item-item'>{arr.item ? arr.item : ''}</p>
+                                                <p className='stat__bottom-middle__stat-main__main-item1'>{arr.tasks ? arr.tasks : ''}</p>
+                                                <p className='stat__bottom-middle__stat-main__main-item2'>{arr.proc ? arr.proc : ''}</p>
+                                                <p className='stat__bottom-middle__stat-main__main-item3'>{arr.time ? arr.time : ''}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         )}
                         {itemError ? (

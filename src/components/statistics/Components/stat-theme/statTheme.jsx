@@ -10,8 +10,8 @@ import useDebounce from '../../../../hooks/useDebounce';
 
 export const StatTheme = () => {
 
-    const [variants, setVariants] = useState(false);
-    const [theme, setTheme] = useState(true);
+    const [variants, setVariants] = useState(true);
+    const [theme, setTheme] = useState(false);
 
     // for left and right state value inputs
     const [left, setLeft] = useState('');
@@ -79,29 +79,67 @@ export const StatTheme = () => {
         { item: "Геометрия", tasks: null, proc: null, time: null },
         { item: "Геометрия", tasks: null, proc: null, time: null },
     ];
+
+    const items3 = [
+        { item: "Вариант 5", tasks: "720", proc: "64", time: "6ч 30м" },
+        { item: "Вариант 1", tasks: "600", proc: "62", time: "4ч 20м" },
+        { item: "Вариант 4", tasks: null, proc: null, time: null },
+        { item: "Вариант 2", tasks: null, proc: null, time: null },
+        { item: "Вариант 3", tasks: null, proc: null, time: null },
+        { item: "Вариант 5", tasks: "720", proc: "64", time: "6ч 30м" },
+        { item: "Вариант 1", tasks: "600", proc: "62", time: "4ч 20м" },
+        { item: "Вариант 4", tasks: null, proc: null, time: null },
+        { item: "Вариант 2", tasks: null, proc: null, time: null },
+        { item: "Вариант 3", tasks: null, proc: null, time: null },
+        { item: "Вариант 5", tasks: "720", proc: "64", time: "6ч 30м" },
+        { item: "Вариант 1", tasks: "600", proc: "62", time: "4ч 20м" },
+        { item: "Вариант 4", tasks: null, proc: null, time: null },
+        { item: "Вариант 2", tasks: null, proc: null, time: null },
+        { item: "Вариант 3", tasks: null, proc: null, time: null },
+        { item: "Вариант 5", tasks: "720", proc: "64", time: "6ч 30м" },
+        { item: "Вариант 1", tasks: "600", proc: "62", time: "4ч 20м" },
+        { item: "Вариант 4", tasks: null, proc: null, time: null },
+        { item: "Вариант 2", tasks: null, proc: null, time: null },
+        { item: "Вариант 3", tasks: null, proc: null, time: null },
+    ];
+
     const [items, setItems] = useState([...virtualApi]);
     const [itemsright, setItemsRight] = useState([...items2]);
+    const [themeItems, setThemeItems] = useState([...items3]);
 
     // ===================== inputs for search =====================
     function leftSearch(e) {
-        const str = e.toLowerCase()
-        const leftarr = virtualApi;
-        for (let i = 0; i < leftarr.length; i++) { leftarr[i].item = leftarr[i].item.toLowerCase() }
-        const res = leftarr.filter(item => item.item.indexOf(str) === 0);
+        if (!variants) {
+            const str = e.toLowerCase();
+            const leftarr = virtualApi.map(item => ({ ...item, item: item.item.toLowerCase() }));
+            const res = leftarr.filter(item => item.item.includes(str));
+            if (res.length >= 1) {
+                const itemsArray = res.map(item => ({ ...item, item: item.item.charAt(0).toUpperCase() + item.item.slice(1) }));
+                setItems(itemsArray);
+                setLeftload(false);
+            } else {
+                setItems([]);
+                setLeftload(false);
+                setLefterror(true);
+            }
+            return;
+        }
+        const str = e.toLowerCase();
+        const itemArr = items3.map(item => ({ ...item, item: item.item.toLowerCase() }));
+        const res = itemArr.filter(item => item.item.includes(str));
         if (res.length >= 1) {
-            const itemsArray = res;
-            for (let i = 0; i < res.length; i++) { itemsArray[i].item = res[i].item.charAt(0).toUpperCase() + res[i].item.slice(1); }
-            setItems(itemsArray)
-            setLeftload(false)
+            const itemsArray = res.map(item => ({ ...item, item: item.item.charAt(0).toUpperCase() + item.item.slice(1) }));
+            setThemeItems(itemsArray);
+            setLeftload(false);
         } else {
-            setItems([])
-            setLeftload(false)
-            setLefterror(true)
+            setThemeItems([]);
+            setLeftload(false);
+            setLefterror(true);
         }
     }
 
     const leftOnChange = (e) => {
-        if (!/^[а-яА-Я]*$/.test(e)) { return; }
+        if (!/^[а-яА-Я0-9\s]*$/.test(e)) { return; }
         setLefterror(false);
         setLeftload(true);
         setLeft(e);
@@ -109,23 +147,21 @@ export const StatTheme = () => {
     }
 
     function rightSearch(e) {
-        const str = e.toLowerCase()
-        const rightarr = items2;
-        for (let i = 0; i < rightarr.length; i++) { rightarr[i].item = rightarr[i].item.toLowerCase() }
-        const res = rightarr.filter(item => item.item.indexOf(str) === 0);
+        const str = e.toLowerCase();
+        const rightarr = items2.map(item => ({ ...item, item: item.item.toLowerCase() }));
+        const res = rightarr.filter(item => item.item.includes(str));
         if (res.length >= 1) {
-            const itemsArray = res;
-            for (let i = 0; i < res.length; i++) { itemsArray[i].item = res[i].item.charAt(0).toUpperCase() + res[i].item.slice(1); }
-            setItemsRight(itemsArray)
-            setRightload(false)
+            const itemsArray = res.map(item => ({ ...item, item: item.item.charAt(0).toUpperCase() + item.item.slice(1) }));
+            setItemsRight(itemsArray);
+            setRightload(false);
         } else {
-            setItemsRight([])
-            setRightload(false)
-            setRighterror(true)
+            setItemsRight([]);
+            setRightload(false);
+            setRighterror(true);
         }
     }
     const rightOnChange = (e) => {
-        if (!/^[а-яА-Я]*$/.test(e)) { return; }
+        if (!/^[а-яА-Я0-9\s]*$/.test(e)) { return; }
         setRighterror(false);
         setRightload(true);
         setRight(e);
@@ -144,19 +180,18 @@ export const StatTheme = () => {
                 <div className={`${themes.left}`}>
                     <div className={`${themes['left-nav']} w100`}>
                         <div className={`${themes['left-nav-btns']} df jcsb`}>
-                            <Link
-                                to='/tasks/statistics'
+                            <p
                                 onClick={() => variantsBtn()}
                                 style={variants ? { backgroundColor: 'white', color: 'black' } : { backgroundColor: 'rgba(0, 0, 0, 0)' }}
                                 className='cw tdn w100 tac'>
                                 Варианты
-                            </Link>
-                            <Link
+                            </p>
+                            <p
                                 onClick={() => themesBtn()}
                                 style={theme ? { backgroundColor: 'white', color: 'black' } : { backgroundColor: 'rgba(0, 0, 0, 0)' }}
                                 className='cw tdn w100 tac'>
                                 Темы
-                            </Link>
+                            </p>
                         </div>
                     </div>
                     <div className={`${themes.content} w100`}>
@@ -180,24 +215,39 @@ export const StatTheme = () => {
                             </div>
                         </div>
                         <div className={`${themes.contentcontainer} w100`}>
-                            {leftload ?
+                            {leftload ? (
                                 <div className={`${themes.leftload} w100 h100`}>
                                     {[...Array(items.length)].map((_, index) => (
                                         <Skeleton style={{ height: '25px', marginTop: '3px' }} className='w100' key={index} />
                                     ))}
                                 </div>
-                                :
+                            ) : (
                                 <div className={`${themes['left-content-list']} w100`}>
-                                    {items.map((arr, ind) => (
-                                        <div className={`${themes['content-item']} df aic w100 oh`} key={ind}>
-                                            <p className={`${themes.itemname} br1w w50 oh toe`}>{arr.item ? arr.item : '-'}</p>
-                                            <p className={`${themes.tasks} tac br1w oh toe`}>{arr.tasks ? arr.tasks : '-'}</p>
-                                            <p className={`${themes.proc} tac br1w oh toe`}>{arr.proc ? arr.proc : '-'}</p>
-                                            <p className={`${themes.time} tac oh toe`}>{arr.time ? arr.time : '-'}</p>
-                                        </div>
-                                    ))}
+                                    {variants ? (
+                                        <>
+                                            {themeItems.map((arr, ind) => (
+                                                <div className={`${themes['content-item']} df aic w100 oh`} key={ind}>
+                                                    <p className={`${themes.itemname} br1w w50 oh toe`}>{arr.item ? arr.item : '-'}</p>
+                                                    <p className={`${themes.tasks} tac br1w oh toe`}>{arr.tasks ? arr.tasks : '-'}</p>
+                                                    <p className={`${themes.proc} tac br1w oh toe`}>{arr.proc ? arr.proc : '-'}</p>
+                                                    <p className={`${themes.time} tac oh toe`}>{arr.time ? arr.time : '-'}</p>
+                                                </div>
+                                            ))}
+                                        </>
+                                    ) : (
+                                        <>
+                                            {items.map((arr, ind) => (
+                                                <div className={`${themes['content-item']} df aic w100 oh`} key={ind}>
+                                                    <p className={`${themes.itemname} br1w w50 oh toe`}>{arr.item ? arr.item : '-'}</p>
+                                                    <p className={`${themes.tasks} tac br1w oh toe`}>{arr.tasks ? arr.tasks : '-'}</p>
+                                                    <p className={`${themes.proc} tac br1w oh toe`}>{arr.proc ? arr.proc : '-'}</p>
+                                                    <p className={`${themes.time} tac oh toe`}>{arr.time ? arr.time : '-'}</p>
+                                                </div>
+                                            ))}
+                                        </>
+                                    )}
                                 </div>
-                            }
+                            )}
                             {lefterror ? (
                                 <div className="w100 h100 df jcc aic">
                                     <h1>Ничего не найдено :(</h1>

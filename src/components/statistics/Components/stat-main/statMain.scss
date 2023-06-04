@@ -211,7 +211,7 @@
     width: 50%;
 }
 
-.stat__bottom-middle__stat-bar__btns a {
+.stat__bottom-middle__stat-bar__btns p {
     text-overflow: ellipsis;
     text-decoration: none; 
     color: white;
@@ -219,6 +219,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    white-space: nowrap;
 }
 .stat__bottom-middle__stat-bar__btns a:first-child {
     border-top-left-radius: 5px;
