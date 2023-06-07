@@ -47,8 +47,8 @@ const theme = createTheme({
 
 export const StatVariant = () => {
     const [tasks, setTasks] = useState([]);
-    const [maxtasks, setMaxtasks] = useState(parseInt(localStorage.getItem("maxTasks") || 2));
-    const [tasksPerPage, setTasksPerPage] = useState(2)
+    const [tasksPerPage, setTasksPerPage] = useState(localStorage.getItem("maxTasks") || '2')
+    const [maxVal, setMaxVal] = useState(parseInt(localStorage.getItem("maxTasks")) || 2)
     const [currentPage, setCurrentPage] = useState(1)
     const [loading, setLoading] = useState(true);
 
@@ -59,7 +59,7 @@ export const StatVariant = () => {
         setHideanswer(!hideanswer)
     }
 
-    const updTest = () => { setTasksPerPage(parseInt(localStorage.getItem("maxTasks" || 2))) }
+    const updTest = () => { setTasksPerPage(parseInt(localStorage.getItem("maxTasks")) || 2) }
 
     useEffect(() => {
         const getTasks = async () => {
@@ -137,28 +137,43 @@ export const StatVariant = () => {
         setCurrentPage(pageNumbers || 1);
     };
 
-    const minusHandler = () => {
-        if (maxtasks <= 1) { return; }
-        setMaxtasks(maxtasks => maxtasks - 1)
-        localStorage.setItem("maxTasks", maxtasks - 1);
-        window.dispatchEvent(new Event('storageUpdated'))
-        updTest()
+    const maxTasks = (which) => {
+        if (which === "minus") {
+            if (maxVal > 1) {
+                setMaxVal(maxVal => parseInt(maxVal) - 1)
+                localStorage.setItem("maxTasks", parseInt(maxVal) - 1);
+            }
+        }
+        if (which === "plus") {
+            if (maxVal < 40) {
+                setMaxVal(maxVal => parseInt(maxVal) + 1)
+                localStorage.setItem("maxTasks", parseInt(maxVal) + 1);
+            }
+        }
     }
-    const plusHandler = () => {
-        if (maxtasks >= 40) { return; }
-        setMaxtasks(maxtasks => maxtasks + 1)
-        localStorage.setItem("maxTasks", maxtasks + 1);
-        window.dispatchEvent(new Event('storageUpdated'))
-        updTest()
-    }
+
+    const tasksHandler = (e) => {
+        if (!/^[0-9]*$/.test(e)) {return;}
+        if (parseInt(e) > 40 || parseInt(e) < 1) {
+            setMaxVal('');
+            return;
+        }
+        setMaxVal(e);
+    };
+    const blurHandler = () => {
+        if (maxVal == '') {
+            setMaxVal('1');
+            localStorage.setItem("maxTasks", maxVal);
+        }
+    };
 
     const hideNav = () => {
         setVisibletext(!visibletext)
     }
 
     useEffect(() => {
-        updTest()
-    }, []);
+        setMaxVal(`${maxVal}`)
+    }, [maxVal])
 
     return (
         <div className={variants.main}>
@@ -194,9 +209,9 @@ export const StatVariant = () => {
                             <div className={`${variants.navbtn} df jcsb aic cp`}>
                                 <p>Задач на странице</p>
                                 <div className={`${variants['navbtn-tasksnum']} df jcsb aic`}>
-                                    <BiMinus size={20} onClick={() => minusHandler()} />
-                                    <span className={variants.tasksnum}>{maxtasks}</span>
-                                    <BiPlus size={20} onClick={() => plusHandler()} />
+                                    <BiMinus size={20} onClick={() => maxTasks('minus')} />
+                                    <input className={variants.tasksnum} type="text" onChange={e => tasksHandler(e.target.value)} value={maxVal} onBlur={blurHandler} />
+                                    <BiPlus size={20} onClick={() => maxTasks('plus')} />
                                 </div>
                             </div>
                             <div className={`${variants.navbtn} df jcsb aic cp`}>
@@ -227,7 +242,7 @@ export const StatVariant = () => {
                         <div className={`${variants['bottom-pagination-skeleton']} w100 tac`}>
                             <Skeleton />
                         </div>
-                        {[...Array(maxtasks)].map((_, index) => (
+                        {[...Array(parseInt(maxVal))].map((_, index) => (
                             <div key={index} className={`${variants['bottom-taskitem-skeleton']} w100`}>
                                 <Skeleton />
                             </div>

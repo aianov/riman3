@@ -11,6 +11,7 @@ import { useTheme } from '../../hooks/usetheme';
 import { Pagination, createTheme, ThemeProvider } from '@mui/material';
 import { TasksList } from './Components/tasksList';
 import { TasksFilters } from './Components/tasksFilters';
+import { GenerateTasks } from './Components/generateTasks';
 import { Statistics } from '../statistics/statistics'
 
 // ICONS
@@ -55,12 +56,10 @@ export const Tasks = () => {
     const { setTheme } = useTheme();
 
     const [bg, setBg] = useState(true)
-    const [isCopy, setIsCopy] = useState(false);
-    const [tasksPerPage, setTasksPerPage] = useState(localStorage.getItem("maxTasks") || 2)
+    const [tasksPerPage, setTasksPerPage] = useState(parseInt(localStorage.getItem("maxTasks")) || 2)
     const [maxVal, setMaxVal] = useState(parseInt(localStorage.getItem("maxTasks")) || 2)
     const [currentPage, setCurrentPage] = useState(1)
     const [tasks, setTasks] = useState([]);
-    const [tasksMax, setTasksMax] = useState()
 
     const [tasksClick, setTasksClick] = useState(false)
     const [statClick, setStatClick] = useState(false)
@@ -68,7 +67,7 @@ export const Tasks = () => {
     const [showgeneration, setShowgeneration] = useState(true);
     const [visibletext, setVisibletext] = useState(false);
 
-    const updTest = () => { setTasksPerPage(parseInt(localStorage.getItem("maxTasks" || 2))) }
+    const updTest = () => { setTasksPerPage(parseInt(localStorage.getItem("maxTasks")) || 2) }
     useEffect(() => {
         const getTasks = async () => {
             const maxValue = localStorage.getItem("maxTasks" || 2);
@@ -129,11 +128,7 @@ export const Tasks = () => {
     }, []);
 
     const copyHandler = () => {
-        navigator.clipboard.writeText('Прочитал = гей')
-        setIsCopy(true)
-        setTimeout(() => {
-            setIsCopy(false)
-        }, 2000)
+        navigator.clipboard.writeText('Просто что то')
     }
 
     const lastTasksIndex = currentPage * tasksPerPage
@@ -145,42 +140,38 @@ export const Tasks = () => {
         console.log(currentTasks)
     };
 
-    const tasksHandler = (e) => {
-        if (e === '') {
-            setTasksMax(0)
-            return;
-        }
-        if (!/^[0-9]*$/.test(e)) { return; }
-        if (parseInt(e) > 40 || parseInt(e) < 1) {
-            setTasksMax(1)
-            return;
-        }
-        setTasksMax(parseInt(e))
-    }
-
-    const blurHandler = () => {
-        setMaxVal(tasksMax)
-        localStorage.setItem("maxTasks", tasksMax);
-        window.dispatchEvent(new Event('storageUpdated'))
-    }
-
     const maxTasks = (which) => {
         if (which === "minus") {
             if (maxVal > 1) {
-                setMaxVal(maxVal => maxVal - 1)
-                localStorage.setItem("maxTasks", maxVal - 1);
-                setTasksMax(tasksMax => parseInt(tasksMax) - 1)
+                setMaxVal(maxVal => parseInt(maxVal) - 1)
+                localStorage.setItem("maxTasks", parseInt(maxVal) - 1);
                 window.dispatchEvent(new Event('storageUpdated'))
             }
         }
         if (which === "plus") {
             if (maxVal < 40) {
-                setMaxVal(maxVal => maxVal + 1)
-                localStorage.setItem("maxTasks", maxVal + 1);
-                setTasksMax(tasksMax => parseInt(tasksMax) + 1)
+                setMaxVal(maxVal => parseInt(maxVal) + 1)
+                localStorage.setItem("maxTasks", parseInt(maxVal) + 1);
                 window.dispatchEvent(new Event('storageUpdated'))
             }
         }
+    }
+
+    const tasksHandler = (e) => {
+        if (!/^[0-9]*$/.test(e)) { return; }
+        if (parseInt(e) > 40 || parseInt(e) < 1) {
+            setMaxVal('')
+            return;
+        }
+        setMaxVal(e)
+    }
+
+    const blurHandler = () => {
+        if (maxVal === '') {
+            setMaxVal(1)
+            localStorage.setItem("maxTasks", parseInt(maxVal));
+        }
+        window.dispatchEvent(new Event('storageUpdated'))
     }
 
     useEffect(() => {
@@ -233,7 +224,7 @@ export const Tasks = () => {
     }
 
     useEffect(() => {
-        setTasksMax(`${maxVal}`)
+        setMaxVal(`${maxVal}`)
     }, [maxVal])
 
     return (
@@ -293,32 +284,28 @@ export const Tasks = () => {
                                                 <div className="tasks-leftbarcontent-wrap">
                                                     <TasksFilters setShowgeneration={setShowgeneration} visibletext={visibletext} />
                                                     {visibletext ? <></> :
-                                                        <>
-                                                            <div className="tasks-leftbarcontent__copyed-div">
-                                                                {(isCopy && true) && <div className='tasks-leftbarcontent__copyed'><span>Скопировано!</span></div>}
-                                                            </div>
-                                                            <div className="tasks-leftbarcontent__inp">
-                                                                <div className="tasks-leftbarcontent__inp1" onClick={copyHandler}>
-                                                                    <div className='tasks-leftbarcontent__inp-id tasks-inp__remove'><p>ID варианта</p></div>
-                                                                    <div className="tasks-ico__div">
-                                                                        <FiCopy size={16.5} />
-                                                                    </div>
-                                                                </div>
-                                                                <div className="tasks-leftbarcontent__inp1">
-                                                                    <div className='tasks-leftbarcontent__inp-export tasks-inp__remove'><p>
-                                                                        Экспорт в PDF</p></div>
-                                                                    <div className="tasks-ico__div">
-                                                                        <BiExport className='tasks-export' size={17.3} />
-                                                                    </div>
-                                                                </div>
-                                                                <div className="tasks-leftbarcontent__inp1">
-                                                                    <div className='tasks-leftbarcontent__inp-scan tasks-inp__remove'><p>Печать</p></div>
-                                                                    <div className="tasks-ico__div">
-                                                                        <HiOutlinePrinter size={18} />
-                                                                    </div>
+                                                        <div className="tasks-leftbarcontent__inp">
+                                                            <div className="tasks-leftbarcontent__inp1" onClick={copyHandler}>
+                                                                <div className='tasks-leftbarcontent__inp-id tasks-inp__remove'><p>ID варианта</p></div>
+                                                                <div className="tasks-ico__div">
+                                                                    <FiCopy size={16.5} />
                                                                 </div>
                                                             </div>
-                                                        </>}
+                                                            <div className="tasks-leftbarcontent__inp1">
+                                                                <div className='tasks-leftbarcontent__inp-export tasks-inp__remove'><p>
+                                                                    Экспорт в PDF</p></div>
+                                                                <div className="tasks-ico__div">
+                                                                    <BiExport className='tasks-export' size={17.3} />
+                                                                </div>
+                                                            </div>
+                                                            <div className="tasks-leftbarcontent__inp1">
+                                                                <div className='tasks-leftbarcontent__inp-scan tasks-inp__remove'><p>Печать</p></div>
+                                                                <div className="tasks-ico__div">
+                                                                    <HiOutlinePrinter size={18} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -336,7 +323,7 @@ export const Tasks = () => {
                                                     <span className='tasks-leftbarcontent__top-filters__maxtasks-btn__minus' onClick={() => maxTasks("minus")}>
                                                         <AiOutlineMinus size={20} />
                                                     </span>
-                                                    <input className='tasks-leftbarcontent__top-filters__maxtasks-btn__text' type="text" onChange={e => tasksHandler(e.target.value)} value={tasksMax} onBlur={blurHandler} />
+                                                    <input className='tasks-leftbarcontent__top-filters__maxtasks-btn__text' type="text" onChange={e => tasksHandler(e.target.value)} value={maxVal} onBlur={blurHandler} />
                                                     <span className='tasks-leftbarcontent__top-filters__maxtasks-btn__plus' onClick={() => maxTasks("plus")}>
                                                         <AiOutlinePlus size={20} />
                                                     </span>
@@ -346,14 +333,7 @@ export const Tasks = () => {
                                         </div>
                                         <div className="tasks-rightbar__router-tasks">
                                             {showgeneration ?
-                                                <div className="tasks-rightbar-generation df fdc aic w100">
-                                                    <p className='w100 df jcc aic'>Укажи параметри и нажми кнопку "создать"</p>
-                                                    <div className="mainloader">
-                                                        <div class="loader">
-                                                            <div className="loader2"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <GenerateTasks setShowgeneration={setShowgeneration}/>
                                                 :
                                                 <>
                                                     <div className="tasks-rightbar__pages">
