@@ -68,11 +68,27 @@ export const Tasks = () => {
     const [visibletext, setVisibletext] = useState(false);
 
     const updTest = () => { setTasksPerPage(parseInt(localStorage.getItem("maxTasks")) || 2) }
+
+    const getTasks = async (url, data) => {
+        try {
+            const response = await axios.post(url, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    getTasks('http://178.21.8.81/api/themes/', )
+
     useEffect(() => {
         const getTasks = async () => {
             const maxValue = localStorage.getItem("maxTasks" || 2);
             if (maxValue === null) { localStorage.setItem("maxTasks", 2); }
-            const res = await axios.get('http://178.21.8.81/api/tasks/');
+            const res = await axios.get('http://178.21.8.81/api/themes/');
             const updatedTasks = await Promise.all(res.data.map(async (task) => {
                 task.text = res.data.indexOf(task) + 1;
                 const editedImage = new Image();
@@ -333,7 +349,7 @@ export const Tasks = () => {
                                         </div>
                                         <div className="tasks-rightbar__router-tasks">
                                             {showgeneration ?
-                                                <GenerateTasks setShowgeneration={setShowgeneration}/>
+                                                <GenerateTasks setShowgeneration={setShowgeneration} />
                                                 :
                                                 <>
                                                     <div className="tasks-rightbar__pages">
